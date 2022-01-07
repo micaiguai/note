@@ -137,7 +137,7 @@ export default class Dep {
 
 ok，继续画流程图看看。
 
-![2](C:\Users\MCG\Desktop\vue\响应式原理\doc\assets\2.png)
+![2](./assets/2.png)
 
 还是看不太明白，得搞懂Watcher是啥才行。
 
@@ -178,7 +178,7 @@ export default class Watcher {
 }
 ```
 
-![3](C:\Users\MCG\Desktop\vue\响应式原理\doc\assets\3.png)
+![3](./assets/3.png)
 
 ## 2. 手写源码
 
@@ -345,7 +345,7 @@ button.addEventListener('click', () => {
 
 让我们跑起来，看看运行效果吧~
 
-![4](C:\Users\MCG\Desktop\vue\响应式原理\doc\assets\4.gif)
+![4](./assets/4.gif)
 
 nice~运行成功。
 
