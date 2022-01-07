@@ -96,7 +96,7 @@ export function defineReactive (
 
 让我们看看流程图吧~
 
-![1](C:\Users\MCG\Desktop\vue\响应式原理\doc\assets\1.png)
+![1](C:/Users/MCG/Desktop/vue-souce-code-analysis/reactivity/doc/assets/1.png)
 
 好像很简单哎。
 
