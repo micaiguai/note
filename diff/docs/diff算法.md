@@ -90,11 +90,11 @@ setTimeout(() => {
 
 运行项目，让我们看看效果吧~
 
-![小试牛刀](C:\Users\MCG\Desktop\vue\diff\docs\assets\小试牛刀.gif)
+![小试牛刀](./assets/小试牛刀.gif)
 
 我们发现`Vitrual DOM`生成的真实DOM把#app替换了；
 
-![小试牛刀2](C:\Users\MCG\Desktop\vue\diff\docs\assets\小试牛刀2.gif)
+![小试牛刀2](./assets/小试牛刀2.gif)
 
 1s后两个`Virtual DOM`之间开始比较差异，第二个li发生了改变。
 
@@ -470,7 +470,7 @@ const vnode = h('ul', { key: 'ul1' }, [
 patch(node, vnode)
 ```
 
-![测试patch函数](C:\Users\MCG\Desktop\vue\diff\docs\assets\测试patch函数.png)
+![测试patch函数](./assets/测试patch函数.png)
 
 好耶，成功了。
 
@@ -478,7 +478,7 @@ patch(node, vnode)
 
 先看流程图。
 
-![patchVnode流程图](C:\Users\MCG\Desktop\vue\diff\docs\assets\patchVnode流程图.png)
+![patchVnode流程图](./assets/patchVnode流程图.png)
 
 好看懂了吗，让我们看看源码吧。
 
@@ -927,7 +927,7 @@ for (let i = 0; i < btn.length; i++) {
 }
 ```
 
-![最后测试](C:\Users\MCG\Desktop\vue\diff\docs\assets\最后测试.gif)
+![最后测试](./assets/最后测试.gif)
 
 好耶！成功啦~（当然不是一次成功的啦2333）
 
