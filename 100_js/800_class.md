@@ -31,7 +31,7 @@ console.log(cat.__proto__.__proto__ === Object.prototype)
 // output: true
 console.log(Animal.__proto__ === Function.prototype)
 ```
-![image](../asset/800_2023-12-10_原型图.png)
+![image](../assets/100_800_2023-12-10_原型图.png)
 
 ## 继承
 ```js
