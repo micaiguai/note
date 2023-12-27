@@ -43,3 +43,22 @@ const result = compose(decorate, toUpperCase, sum)('love', 'frontend')
 // output: ***LOVEFRONTEND***
 console.log(result)
 ```
+### 手写reduce
+```js
+Array.prototype.reduce = function(callback, initial) {
+  for (let index = 0; index < this.length; index++) {
+    if (initial === undefined) {
+      initial = callback(this[index], this[index + 1], index + 1, this)
+      index++
+    } else {
+      initial = callback(initial, this[index], index, this)
+    }
+  }
+  return initial
+}
+const result = [1, 2, 3].reduce((accumulator, item) => {
+  return accumulator + item
+})
+// output: 6
+console.log(result)
+```
