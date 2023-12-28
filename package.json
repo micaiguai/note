@@ -5,5 +5,8 @@
 		"@babel/plugin-proposal-decorators": "^7.23.6",
 		"@babel/preset-env": "^7.23.6",
 		"promises-aplus-tests": "^2.1.2"
+	},
+	"dependencies": {
+		"co": "^4.6.0"
 	}
 }
