@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="/dist/umd/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          name: 'tom',
+          address: {
+            name: 'shanghai'
+          },
+          hobbies: ['eat']
+        }
+      }
+    })
+    console.log('vm :', vm)
+    console.log('vm._data :', vm._data)
+    // vm._data.name = 'jack'
+    // vm._data.address = {
+    //   name: 'nanjing'
+    // }
+    // vm._data.address.name = 'beijing'
+    // vm._data.hobbies[0] = 'sleep'
+    // vm._data.hobbies[1] = 'play'
+    const hobbyObject = {
+      name: 'sleep'
+    }
+    vm._data.hobbies.push(hobbyObject)
+    hobbyObject.name = 'play'
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "vue2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "rollup -c -w",
+    "dev": "cross-env NODE_ENV=development rollup -c -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "rollup": "^4.9.1",
+    "rollup-plugin-serve": "^1.1.1"
+  }
+}
