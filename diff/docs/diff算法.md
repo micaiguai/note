@@ -598,7 +598,7 @@ setTimeout(() => {
 
 
 
-![测试patchVnode函数](C:\Users\MCG\Desktop\测试patchVnode函数.gif)
+![测试patchVnode函数](./assets/测试patchVnode函数.gif)
 
 没有问题。
 
