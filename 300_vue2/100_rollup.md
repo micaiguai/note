@@ -1,3 +1,19 @@
+# 配置rollup
+## 下载依赖
+```shell
+# 打包工具
+pnpm i -D rollup
+# 开启web服务
+pnpm i -D rollup-plugin-serve
+# 注册环境变量
+pnpm i -D cross-env
+```
+## 相关网址
+- [rollup](https://rollupjs.org/)
+- [rollup-plugin-serve](https://github.com/thgh/rollup-plugin-serve)
+- [cross-env](https://www.npmjs.com/package/cross-env)
+## rollup.config.mjs配置
+```js
 import serve from 'rollup-plugin-serve'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -63,3 +79,5 @@ export default {
 	},
   plugins: generatePlugins
 }
+```
+
