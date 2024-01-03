@@ -20,3 +20,20 @@ export function definePlainValue(object, key, value) {
     configurable: false
   })
 }
+
+/**
+ * 代理
+ * @param {object} object 需要被代理的对象
+ * @param {string} sourceKey 需要被代理的键值
+ * @param {string} key 获取值的键值
+ */
+export function proxy(object, sourceKey, key) {
+  Object.defineProperty(object, key, {
+    get() {
+      return object[sourceKey][key]
+    },
+    set(newVal) {
+      object[sourceKey][key] = newVal
+    }
+  })
+}

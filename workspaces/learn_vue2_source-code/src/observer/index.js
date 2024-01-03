@@ -45,7 +45,6 @@ function defineProperty(data, key, value) {
       if (newValue === value) {
         return
       }
-      console.log('newValue :', newValue)
       observe(newValue)
       value = newValue
     }

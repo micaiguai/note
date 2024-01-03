@@ -1,117 +1,103 @@
-const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z]*`; // abc-aaa
-const qnameCapture = `((?:${ncname}\\:)?${ncname})`; // <aaa:asdads>
-const startTagOpen = new RegExp(`^<${qnameCapture}`); // 标签开头的正则 捕获的内容是标签名
-const endTag = new RegExp(`^<\\/${qnameCapture}[^>]*>`); // 匹配标签结尾的 </div>
-const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/; // 匹配属性的
-const startTagClose = /^\s*(\/?)>/; // 匹配标签结束的 >  <div>
+import { NODE_TYPE_ENUM, parseHtml } from './parser-html'
 
-
-let root
-const stack = []
+const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g
 
 /**
- * 处理开始标签节点
- * @param {string} tagName 标签名称
- * @param {object[]} attrs 属性信息
+ * 给generate函数生成props对象字符串
+ * @param {object[]} attrs 属性信息数组
+ * @returns {string} props对象字符串
  */
-function handleStartTag(tagName, attrs) {
-  const astItem = {
-    attrs,
-    tag: tagName,
-    children: [],
-    parent: undefined
-  }
-}
-/**
- * 处理开始标签节点
- * @param {string} text 文本信息
- */
-function handleText(text) {
-
-}
-/**
- * 处理结束标签节点
- * @param {string} tagName 标签名称
- */
-function handleStartTag(tagName) {
-
-}
-
-/**
- * 转换html为ast
- * @param {string} html 模板信息
- * @returns {object} ast信息
- */
-function parseHtml(html) {
-  /**
-   * 前进步数
-   * @param {number} step 步数
-   */
-  function advance(step) {
-    html = html.substring(step)
-  }
-  /**
-   * 转换html为开始标签的ast
-   * @param {string} html 模板信息
-   * @returns {object} ast信息
-   */
-  function parseStartTag() {
-    const matchInfo = html.match(startTagOpen)
-    let startTagCloseMatchInfo
-    let attributeMatchInfo
-    let astInfo = {
-      tagName: '',
-      attrs: []
-    }
-    if (!matchInfo) {
-      return
-    }
-    astInfo.tagName = matchInfo[1]
-    advance(matchInfo[0].length)
-    // 如果没有匹配到开始标签的结束符 && 能匹配到属性
-    while (!(startTagCloseMatchInfo = html.match(startTagClose)) && (attributeMatchInfo = html.match(attribute))) {
-      advance(attributeMatchInfo[0].length)
-      astInfo.attrs.push({
-        name: attributeMatchInfo[1],
-        value: attributeMatchInfo[3] ?? attributeMatchInfo[4] ?? attributeMatchInfo[5]
+function genProps(attrs) {
+  let propsStr =  ''
+  attrs.forEach(attrItem => {
+    let value
+    if (attrItem.name === 'style') {
+      const valueObj = {}
+      const styleItems = attrItem.value.split(';')
+      styleItems.forEach(styleItem => {
+        const [styleItemKey, styleItemValue] = styleItem.split(':')
+        valueObj[styleItemKey.trim()] = styleItemValue.trim()
       })
+      value = valueObj
+    } else {
+      value = attrItem.value
     }
-    advance(startTagCloseMatchInfo[0].length)
-    return astInfo
-  }
-  while (html) {
-    let astInfo
-    const startTagIndex = html.indexOf('<')
-    // 1. 匹配到<span
-    // 2. 未匹配到<开头
-    // 3. 匹配到</span>
-    if (startTagIndex === 0) {
-      astInfo = parseStartTag()
-      if (astInfo) {
-        continue
-      }
-      const endTagMatchInfo = html.match(endTag)
-      astInfo = {
-        tagName: endTagMatchInfo[1]
-      }
-      advance(endTagMatchInfo[0].length)
-      continue
-    }
-    const plainText = html.slice(0, startTagIndex)
-    astInfo = {
-      value: plainText
-    }
-    advance(plainText.length)
-  }
+    // JSON.stringify可以将对象转成字符串，也可以将 app 转换为 "app"
+    propsStr += `${attrItem.name}:${JSON.stringify(value)},`
+  })
+  return `{${propsStr.slice(0, -1)}}`
 }
 
+/**
+ * 生成子集
+ * @param {object} root 抽象语法树
+ * @returns {string} children渲染字符串
+ */
+function genChildren(root) {
+  let childrenRenderStr = ''
+  if (!root?.children?.length) {
+    return childrenRenderStr
+  }
+  root.children.forEach(item => {
+    if (item.type === NODE_TYPE_ENUM.NODE) {
+      childrenRenderStr += `,${generate(item)}`
+    }
+    if (item.type === NODE_TYPE_ENUM.TEXT) {
+      let index = 0
+      // 重置lastIndex
+      defaultTagRE.lastIndex = 0
+      let match
+      while (match = defaultTagRE.exec(item.text)) {
+        const commonStr = item.text.slice(index, match.index)
+        childrenRenderStr += `,_v(${JSON.stringify(commonStr)}`
+        childrenRenderStr += ` + _s(${JSON.stringify(match[1])})`
+        index = defaultTagRE.lastIndex
+      }
+      // 如果字符串还有值
+      if (index < item.text.length) {
+        childrenRenderStr += `,_v(${JSON.stringify(item.text.slice(index))}`
+      }
+      childrenRenderStr += ')'
+    }
+  })
+  return childrenRenderStr
+}
+
+/**
+ * 将模板字符串转换为render字符串
+ * @param {object} root 抽象语法树
+ * @returns {string} render字符串
+ */
+function generate(root) {
+  return `_c(
+    "${root.tag}",
+    ${
+      root.attrs?.length > 0
+        ? genProps(root.attrs)
+        : 'undefined'
+    }
+    ${
+      genChildren(root)
+    }
+  )`
+}
 
 /**
  * @param {string} template 模板信息
  * @returns {Function} 渲染函数
  */
 export function compileToFunction(template) {
+  // 1. 转换成抽象语法树
   const root = parseHtml(template)
+  console.log('root :', root)
+  // 2. 转换成render函数字符串
+  const code = generate(root)
+  const renderFn = new Function(`
+    with (this) {
+      ${code}
+    }
+  `)
+  console.log('renderFn :', renderFn)
   return function() {
     
   }

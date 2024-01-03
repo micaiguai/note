@@ -6,9 +6,9 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app" container>
-    <span>{{name}}</span>
-    <span>{{age}}</span>
+  <div id="app" style="color: pink; background: #fff">
+    <span>hello {{name}}</span>
+    <span>my age is {{age}}</span>
   </div>
   <script src="/dist/umd/vue.js"></script>
   <script>
@@ -38,6 +38,7 @@
     }
     vm._data.hobbies.push(hobbyObject)
     hobbyObject.name = 'play'
+    console.log('vm.name :', vm.name)
   </script>
 </body>
 </html>
