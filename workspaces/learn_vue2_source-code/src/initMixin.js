@@ -1,3 +1,4 @@
+import { compileToFunction } from "./complier/index"
 import { initState } from "./initState"
 
 export function initMixin(Vue) {
@@ -26,7 +27,7 @@ export function initMixin(Vue) {
       // 暂不实现
     } else if (options.el) {
       const template = document.querySelector(options.el).outerHTML
-      console.log('template :', template)
+      vm.render = compileToFunction(template)
     }
   }
 }

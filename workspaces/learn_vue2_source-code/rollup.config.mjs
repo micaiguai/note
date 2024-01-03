@@ -22,9 +22,9 @@ const pluginServe = () => {
     // 启动服务时, 是否打开网页
     open: true,
     // 打开网页时，导航到的网址
-    openPage: '',
+    openPage: '/public/index.html',
     // 需要serve的目录地址
-    contentBase: resolve(__dirname, './public'),
+    contentBase: '',
     // 端口
     port: 3000,
   })
@@ -61,5 +61,5 @@ export default {
     // 是否开启sourcemap
     sourcemap: true
 	},
-  plugins: generatePlugins
+  plugins: generatePlugins()
 }
