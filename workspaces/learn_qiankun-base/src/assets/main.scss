@@ -1,0 +1,8 @@
+// vite和qiankun配合使用，需要手动处理样式隔离问题
+#app.child-1 {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
