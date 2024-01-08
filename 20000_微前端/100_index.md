@@ -27,11 +27,147 @@
 2. `webpack`联邦模块
 
 ## css隔离机制
-1. ?_`shadowDOM`
+1. `shadowDOM`
 2. `BEM`(Block Element Modifier)约定项目前缀
 3. `CSS-Modules`打包时生成不冲突的选择器名称
 4. `css-in-js`
 
+### shadowDOM实践
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span {
+      color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 如果mode是closed，显示样式：color: pink -->
+    <span>shadowDOM outer</span>
+    <div id="shadow-wrapper"></div>
+  </div>
+  <script>
+    const appDOM = document.querySelector('#shadow-wrapper')
+    // 初始化shadowDOM
+    const shadowDOM = appDOM.attachShadow({
+      // 封闭性：'open' | 'closed'
+      mode: 'closed'
+    })
+    const styleTag = document.createElement('style')
+    styleTag.innerText = `
+      span {
+        color: skyblue;
+      }
+    `
+    const spanDOM = document.createElement('span')
+    // 如果mode是closed，显示样式：color: blue
+    spanDOM.innerText = 'shadowDOM inner'
+    shadowDOM.append(spanDOM, styleTag)
+    // 如果mode是open，output: #shadow-root (open)
+    // 如果mode是closed，output: null
+    console.log(appDOM.shadowRoot)
+  </script>
+</body>
+</html>
+```
+
 ## js隔离机制
-1. ?_利用`window`隔离
-2. ?_利用`proxy`隔离
+1. 利用`window`隔离
+2. 利用`proxy`隔离
+
+### window隔离
+```js
+class SnapshotSandbox {
+  windowSnapshot = {}
+  modifyPropsMap = {}
+
+  constructor() {}
+  active() {
+    for (const key in window) {
+      this.windowSnapshot[key] = window[key]
+    }
+    for (const key in this.modifyPropsMap) {
+      window[key] = this.modifyPropsMap[key]
+    }
+  }
+  inactive() {
+    for (const key in window) {
+      if (window[key] !== this.windowSnapshot[key]) {
+        this.modifyPropsMap[key] = window[key]
+        window[key] = this.windowSnapshot[key]
+      }
+    }
+  }
+}
+
+const sandbox = new SnapshotSandbox()
+sandbox.active()
+window.foo = 1
+// output: 1
+console.log(window.foo)
+sandbox.inactive()
+// output: undefined
+console.log(window.foo)
+sandbox.active()
+// output: 1
+console.log(window.foo)
+```
+
+### 利用proxy隔离
+```js
+class ProxySandbox {
+  activeFlag = true
+  proxyWindow
+
+  constructor() {
+    const fakeWindow = Object.create(null)
+    this.proxyWindow = new Proxy(fakeWindow, {
+      get: (target, prop, receiver) => {
+        if (prop in target) {
+          return Reflect.get(target, prop, receiver)
+        } else {
+          return Reflect.get(window, prop, receiver)
+        }
+      },
+      set: (target, prop, newVal, receiver) => {
+        if (!this.activeFlag) {
+          return false
+        }
+        Reflect.set(target, prop, newVal, receiver)
+      }
+    })
+  }
+  active() {
+    this.activeFlag = true
+  }
+  inactive() {
+    this.activeFlag = false
+  }
+}
+
+const proxySandbox1 = new ProxySandbox()
+const proxySandbox2 = new ProxySandbox()
+proxySandbox1.proxyWindow.foo = 'foo1'
+proxySandbox2.proxyWindow.foo = 'foo2'
+// output: foo1
+console.log(proxySandbox1.proxyWindow.foo)
+// output: foo2
+console.log(proxySandbox2.proxyWindow.foo)
+// output: undefined
+console.log(window.foo)
+proxySandbox1.inactive()
+proxySandbox2.inactive()
+proxySandbox1.proxyWindow.foo = 'foo1-modify'
+// output: foo1
+console.log(proxySandbox1.proxyWindow.foo)
+// output: foo2
+console.log(proxySandbox2.proxyWindow.foo)
+// output: undefined
+console.log(window.foo)
+```
