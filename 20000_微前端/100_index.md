@@ -32,6 +32,9 @@
 3. `CSS-Modules`打包时生成不冲突的选择器名称
 4. `css-in-js`
 
+## 生命周期
+![生命周期](../assets/20000_100_微前端-生命周期.png)
+
 ### shadowDOM实践
 ```html
 <!DOCTYPE html>
