@@ -80,8 +80,8 @@ const folders = await generateFolders([
 // .vitepress/config.js
 export default {
   // site-level options
-  title: 'mcg_notes',
-  description: 'notes of mcg',
+  title: 'mcg notes',
+  description: 'mcg notes',
   base: `${process.env.BASE}`,
   srcDir: '.',
   srcExclude: [
