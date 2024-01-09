@@ -11,7 +11,6 @@ const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_(\S+)(\.\S+)?/
 async function generateFolders(folderNames) {
   let folderInfos = await Promise.all(
     folderNames.map(async folderName => {
-      console.log('folderName :', folderName)
       const [entireStr, sortNum, text] = folderName.match(folderOrFileRegExp)
       return {
         text: text,
@@ -41,16 +40,17 @@ async function generateFiles(folderName) {
   const fileNames = await readdir(resolve(process.cwd(), `./${folderName}`))
   // 整理文件信息，排序
   let fileInfos = fileNames.map(fileName => {
-    console.log('fileName :', fileName)
-    const [entireStr, sortNum, text] = fileName.match(folderOrFileRegExp)
-    console.log('text :', text)
-    console.log('join(folderName, text) :', join(folderName, text))
+    const matchResult = fileName.match(folderOrFileRegExp)
+    if (!matchResult) {
+      return
+    }
+    const [entireStr, sortNum, text] = matchResult
     return {
       text,
       sortNum: Number(sortNum),
-      link: join(folderName, text)
+      link: `/${join(folderName, fileName)}`
     }
-  })
+  }).filter(item => item)
   fileInfos.sort((fileInfoA, fileInfoB) => {
     return fileInfoA.sortNum - fileInfoB.sortNum
   })
@@ -66,8 +66,10 @@ async function generateFiles(folderName) {
 
 const folders = await generateFolders([
   './100_js',
-  './200_设计模式'
+  './200_设计模式',
+  './300_vue2',
 ])
+
 // /**
 //  * 处理文件夹或文件数组
 //  * @param {object[]} items 文件夹或文件数组
@@ -77,8 +79,8 @@ const folders = await generateFolders([
 export default {
   // site-level options
   title: 'VitePress2',
-  description: 'Just playing around.adasdasd',
-  base: folders[0].items[0].link,
+  description: 'Just playing around.',
+  base: '',
   srcDir: '.',
   srcExclude: [
     // 不是以数字开头的文件夹会被忽略
