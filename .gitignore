@@ -2,6 +2,8 @@ node_modules
 playground
 dist
 logs
+todo
 .vitepress/cache/**
 .vitepress/dist/**
-todo
+
+.DS_Store

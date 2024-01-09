@@ -80,7 +80,7 @@ export default {
   // site-level options
   title: 'VitePress2',
   description: 'Just playing around.',
-  base: '',
+  base: `${process.env.BASE}`,
   srcDir: '.',
   srcExclude: [
     // 不是以数字开头的文件夹会被忽略

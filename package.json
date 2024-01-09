@@ -1,26 +1,27 @@
 {
-  "name": "my_note",
+	"name": "my_note",
 	"type": "module",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
-  },
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"docs:dev": "vitepress dev",
+		"docs:build": "cross-env BASE=/notes/ vitepress build",
+		"docs:preview": "vitepress preview"
+	},
 	"devDependencies": {
 		"@babel/cli": "^7.23.4",
 		"@babel/plugin-proposal-decorators": "^7.23.6",
 		"@babel/preset-env": "^7.23.6",
+		"cross-env": "^7.0.3",
 		"promises-aplus-tests": "^2.1.2",
 		"vitepress": "1.0.0-rc.33"
 	},
 	"dependencies": {
 		"co": "^4.6.0"
 	},
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }
