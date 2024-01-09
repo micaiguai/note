@@ -68,6 +68,8 @@ const folders = await generateFolders([
   './100_js',
   './200_设计模式',
   './300_vue2',
+  './10000_vitePress',
+  './20000_微前端',
 ])
 
 // /**
@@ -78,8 +80,8 @@ const folders = await generateFolders([
 // .vitepress/config.js
 export default {
   // site-level options
-  title: 'VitePress2',
-  description: 'Just playing around.',
+  title: 'mcg_notes',
+  description: 'notes of mcg',
   base: `${process.env.BASE}`,
   srcDir: '.',
   srcExclude: [
