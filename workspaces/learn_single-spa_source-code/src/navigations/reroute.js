@@ -4,6 +4,7 @@ import { toLoadPromise } from '../lifecycles/load'
 import { toMountPromise } from "../lifecycles/mount";
 import { toUnmountPromise } from "../lifecycles/unmount";
 import { toBootstrapPromise } from "../lifecycles/bootstrap";
+import './navigation-events'
 
 export function reroute() {
   const {

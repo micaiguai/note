@@ -11,7 +11,6 @@
 ## hash和history的原理
 
 ### hash原理
-核心原理是利用了`hashchange`事件
 ```js
 window.addEventListener('hashchange', e => {
   // 当手动改变地址栏地址时
@@ -23,4 +22,40 @@ window.addEventListener('hashchange', e => {
 })
 ```
 ### history原理
-
+```html
+<html lang="en">
+<body>
+  <button class="push-state">pushState</button>
+  <button class="replace-state">replaceState</button>
+  <script>
+    window.addEventListener('popstate', e => {
+      // pushState和replaceState不会触发
+      // 在以下情况会有触发
+      // 1. window.history.go()
+      // 2. window.history.back()
+      // 3. 浏览器后退或前进
+      console.log(e)
+    })
+    const pushStateDom = document.querySelector('.push-state')
+    const replaceStateDom = document.querySelector('.replace-state')
+    pushStateDom.addEventListener('click', e => {
+      window.history.pushState(
+        // 数据
+        { foo: 'foo' },
+        // title，已废弃，建议传空字符串
+        '',
+        // url
+        'foo'
+      )
+    })
+    replaceStateDom.addEventListener('click', e => {
+      window.history.replaceState(
+        { bar: 'bar' },
+        '',
+        'bar'
+      )
+    })
+  </script>
+</body>
+</html>
+```

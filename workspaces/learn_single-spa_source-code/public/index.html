@@ -32,7 +32,8 @@
           },
         }
       },
-      location => location.hash.startsWith('#/app1'),
+      // location => location.hash.startsWith('#app1'),
+      location => location.href.endsWith('/app1'),
       {
         store:  {
           name: 'tom'
@@ -57,7 +58,8 @@
           },
         }
       },
-      location => location.hash.startsWith('#/app2'),
+      // location => location.hash.startsWith('#app2'),
+      location => location.href.endsWith('/app2'),
       {
         store:  {
           name: 'jerry'

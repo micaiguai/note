@@ -30,7 +30,7 @@ export function getAppChanges() {
         break
       case LIFECYCLE_ENUM.NOT_BOOTSTRAPPED:
       case LIFECYCLE_ENUM.BOOTSTRAPPING:
-      case LIFECYCLE_ENUM.MOUNTED:
+      case LIFECYCLE_ENUM.NOT_MOUNTED:
         if (shouldBeActiveFlag) {
           appsToMount.push(app)
         }

@@ -18,7 +18,7 @@ export default {
       // 启动服务时, 是否打开网页
       open: true,
       // 打开网页时，导航到的网址
-      openPage: '/public/index.html',
+      openPage: '/public/',
       // 需要serve的目录地址
       contentBase: '',
       // 端口
