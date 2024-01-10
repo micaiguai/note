@@ -85,6 +85,13 @@
 2. 利用`proxy`隔离
 
 ### window隔离
+缺点：
+- 污染`window`
+- 需要遍历`window`，性能差
+- 不支持同时运行多个沙箱
+
+优点：
+- 兼容性
 ```js
 class SnapshotSandbox {
   windowSnapshot = {}
@@ -123,6 +130,101 @@ console.log(window.foo)
 ```
 
 ### 利用proxy隔离
+#### 单例沙箱
+缺点：
+- 污染`window`
+- 不支持同时运行多个沙箱
+- 兼容性
+
+优点：
+- 不用遍历`window`，性能好
+```js
+class LegacyProxy {
+  // 修改时，备份window上的数据
+  modifiedPropsOriginalValueMapInSandbox = {}
+  // 新增的数据
+  addedPropsMapInSandbox = {}
+  // 当前改变的数据
+  currentUpdatedPropsValueMap = {}
+  // 当前沙箱是否运行中
+  sandboxRunning
+  // 当前代理的对象
+  proxy
+
+  constructor() {
+    const fakeWindow = Object.create(null)
+    this.proxy = new Proxy(
+      fakeWindow,
+      {
+        get: (target, prop, receiver) => {
+          return window[prop]
+        },
+        set: (target, prop, newVal, receiver) => {
+          // 如果当前沙箱停止，返回
+          if (!this.sandboxRunning) {
+            return true
+          }
+          // 如果window上没有这个prop，记录在addedPropsMapInSandbox中
+          if (!window.hasOwnProperty(prop)) {
+            this.addedPropsMapInSandbox[prop] = newVal
+            // 如果window上有这个prop，说明这个prop是更改 且 modifiedPropsOriginalValueMapInSandbox没有这个prop
+            // 则备份window上的数据到modifiedPropsOriginalValueMapInSandbox中
+          } else if (modifiedPropsOriginalValueMapInSandbox.hasOwnProperty(prop)) {
+            const originVal = window[prop]
+            this.modifiedPropsOriginalValueMapInSandbox[prop] = originVal
+          }
+          // 记录set的操作
+          this.currentUpdatedPropsValueMap[prop] = newVal
+          window[prop] = newVal
+          return true 
+        }
+      }
+    )
+  }
+
+  active() {
+    this.sandboxRunning = true
+    // 恢复currentUpdatedPropsValueMap至window上
+    for (const prop in this.currentUpdatedPropsValueMap) {
+      window[prop] = this.currentUpdatedPropsValueMap[prop]
+    }
+  }
+
+  inactive() {
+    this.sandboxRunning = false
+    // 恢复window
+    // 1. 移除window在addedPropsMapInSandbox记录的prop
+    for (const prop in this.addedPropsMapInSandbox) {
+      delete window[prop]
+    }
+    // 2. 恢复window在modifiedPropsOriginalValueMapInSandbox记录的prop
+    for (const prop in this.modifiedPropsOriginalValueMapInSandbox) {
+      window[prop] = this.modifiedPropsOriginalValueMapInSandbox[prop]
+    }
+  }
+}
+
+const proxyWindow = new LegacyProxy()
+proxyWindow.active()
+proxyWindow.proxy.foo = 1
+// output: 1
+console.log(proxyWindow.proxy.foo)
+proxyWindow.inactive()
+// output: undefined
+console.log(proxyWindow.proxy.foo)
+proxyWindow.active()
+// output: 1
+console.log(proxyWindow.proxy.foo)
+```
+
+#### 多例沙箱
+缺点：
+- 兼容性
+
+优点：
+- 支持同时运行多个沙箱
+- 不污染`window`
+- 不用遍历`window`，性能好
 ```js
 class ProxySandbox {
   activeFlag = true
