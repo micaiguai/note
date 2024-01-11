@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-01-11T03:21:46.275Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0" etag="prhYDa4NcYkWMa7an-Q_" version="22.1.17" type="github">
+<mxfile host="app.diagrams.net" modified="2024-01-11T03:27:43.114Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0" etag="BhjYep_V5ZnZmsyzZPdK" version="22.1.17" type="github">
   <diagram name="微前端" id="fnUhyGsoiNcezvq9pX6R">
-    <mxGraphModel dx="5447" dy="2320" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3788" dy="1305" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -140,7 +140,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rLlands4R5W000FYH6Sl-117" value="reroute" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-1120" y="550" width="450" height="430" as="geometry" />
+          <mxGeometry x="-1120" y="550" width="450" height="440" as="geometry" />
         </mxCell>
         <mxCell id="rLlands4R5W000FYH6Sl-46" value="是否started" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="rLlands4R5W000FYH6Sl-117">
           <mxGeometry x="160.00000000000017" y="140" width="120" height="80" as="geometry" />
@@ -222,7 +222,7 @@
           <mxGeometry x="50" y="676.66" width="190" height="30" as="geometry" />
         </mxCell>
         <mxCell id="rLlands4R5W000FYH6Sl-114" value="&lt;div&gt;1. unload&lt;/div&gt;&lt;div&gt;2. unmount&lt;/div&gt;&lt;div&gt;3. load&lt;/div&gt;&lt;div&gt;4. bootstrap&lt;/div&gt;&lt;div&gt;5. mount&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="rLlands4R5W000FYH6Sl-155">
-          <mxGeometry x="640.0000000000001" y="679.99" width="90" height="70" as="geometry" />
+          <mxGeometry x="640.0000000000001" y="689.99" width="90" height="70" as="geometry" />
         </mxCell>
         <mxCell id="rLlands4R5W000FYH6Sl-61" value="performanceChanges" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="rLlands4R5W000FYH6Sl-155">
           <mxGeometry x="770.4100000000001" y="619.99" width="120" height="60" as="geometry" />
