@@ -24,6 +24,8 @@ export async function toLoadPromise(app) {
     app.mount = flatFnArray(mount)
     app.unmount = flatFnArray(unmount)
     app.status = LIFECYCLE_ENUM.NOT_BOOTSTRAPPED
+    // 删除app.loadPromise
+    delete app.loadPromise
     return app
   }))
 }

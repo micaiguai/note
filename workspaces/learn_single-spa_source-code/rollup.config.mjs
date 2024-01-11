@@ -2,7 +2,7 @@ import serve from 'rollup-plugin-serve'
 
 export default {
   // 主文件入口
-	input: 'src/main.js',
+	input: 'src/single-spa.js',
 	output: {
     // 导出文件地址
 		file: './lib/umd/single-spa.js',

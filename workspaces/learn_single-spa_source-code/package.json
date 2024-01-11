@@ -2,7 +2,7 @@
   "name": "learn_single-spa_source-code",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "single-spa.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "rollup -c -w"

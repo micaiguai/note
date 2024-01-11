@@ -1,8 +1,8 @@
 import { reroute } from "./navigations/reroute"
 
-export let startedFlag = false
+export let started = false
 
 export function start() {
-  startedFlag = true
+  started = true
   reroute()
 }

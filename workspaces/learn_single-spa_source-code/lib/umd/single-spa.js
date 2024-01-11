@@ -4,10 +4,10 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.singleSpa = {}));
 })(this, (function (exports) { 'use strict';
 
-  let startedFlag = false;
+  let started = false;
 
   function start() {
-    startedFlag = true;
+    started = true;
     reroute();
   }
 
@@ -54,6 +54,8 @@
       app.mount = flatFnArray(mount);
       app.unmount = flatFnArray(unmount);
       app.status = LIFECYCLE_ENUM.NOT_BOOTSTRAPPED;
+      // 删除app.loadPromise
+      delete app.loadPromise;
       return app
     }))
   }
@@ -92,6 +94,7 @@
 
   // 重新执行reroute
   function urlReroute() {
+    console.log('urlReroute arguments :', arguments);
     reroute();
   }
   // 劫持hashchange、popstate事件
@@ -144,7 +147,7 @@
       const curUrl = window.location.href;
       // 如果url不一致，重新执行urlReroute
       if (preUrl !== curUrl) {
-        urlReroute();
+        window.dispatchEvent(new PopStateEvent('popstate'));
       }
     }
   }
@@ -158,7 +161,7 @@
       appsToMount,
       appsToUnmount
     } = getAppChanges();
-    if (startedFlag) {
+    if (started) {
       return performanceChanges()
     } else {
       return loadApps()

@@ -4,6 +4,7 @@ const routingEventsListeningTo = ['hashchange', 'popstate']
 
 // 重新执行reroute
 function urlReroute() {
+  console.log('urlReroute arguments :', arguments)
   reroute()
 }
 // 劫持hashchange、popstate事件
@@ -56,7 +57,7 @@ function patchedUpdateState(fn) {
     const curUrl = window.location.href
     // 如果url不一致，重新执行urlReroute
     if (preUrl !== curUrl) {
-      urlReroute()
+      window.dispatchEvent(new PopStateEvent('popstate'))
     }
   }
 }

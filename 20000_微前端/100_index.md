@@ -276,3 +276,6 @@ console.log(proxySandbox2.proxyWindow.foo)
 // output: undefined
 console.log(window.foo)
 ```
+
+## 流程图
+![流程图](../assets/20000_100_微前端-流程图.svg)

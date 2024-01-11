@@ -1,5 +1,5 @@
 import { getAppChanges } from "../applications/app";
-import { startedFlag } from "../start";
+import { started } from "../start";
 import { toLoadPromise } from '../lifecycles/load'
 import { toMountPromise } from "../lifecycles/mount";
 import { toUnmountPromise } from "../lifecycles/unmount";
@@ -12,7 +12,7 @@ export function reroute() {
     appsToMount,
     appsToUnmount
   } = getAppChanges()
-  if (startedFlag) {
+  if (started) {
     return performanceChanges()
   } else {
     return loadApps()
