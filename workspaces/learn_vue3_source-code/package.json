@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "name": "learn_vue3_source-code",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node ./scripts/dev.js",
+    "build": "node ./scripts/build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "execa": "^8.0.1",
+    "rollup": "^4.9.5"
+  }
+}
