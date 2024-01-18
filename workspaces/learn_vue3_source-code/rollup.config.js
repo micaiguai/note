@@ -37,7 +37,7 @@ export default packageOptions.formats.map(format => {
 
 function createConfig(format, output) {
   const isGlobalBuild = /global/.test(format)
-  output.sourceMap = true
+  output.sourcemap = true
   if (isGlobalBuild) {
     output.name = packageOptions.name
   }
