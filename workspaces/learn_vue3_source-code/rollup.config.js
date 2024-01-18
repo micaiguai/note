@@ -1,6 +1,7 @@
 import { createRequire } from 'node:module'
 import path, { format } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import typescript from '@rollup/plugin-typescript'
 
 const require = createRequire(import.meta.url)
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
@@ -43,6 +44,11 @@ function createConfig(format, output) {
   }
   return {
     input: resolve('src/index.ts'),
-    output
+    output,
+    plugins: [
+      typescript({
+        sourceMap: true
+      })
+    ]
   }
 }
