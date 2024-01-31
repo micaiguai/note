@@ -1,7 +1,4 @@
-const shared = {
-  name: 'shared'
-}
+export const isObject = (val: unknown): val is Record<any, any> =>
+  val !== null && typeof val === 'object'
 
-const name: string = 'tom'
-console.log('name :', name)
-export default shared
+export const extend = Object.assign

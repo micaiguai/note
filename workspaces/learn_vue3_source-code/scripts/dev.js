@@ -2,9 +2,9 @@ import fs from 'fs'
 import { cpus } from 'os'
 import { execa } from 'execa'
 
-const targets = fs.readdirSync('packages').filter(f => {
-  return fs.statSync(`packages/${f}`).isDirectory()
-})
+const targets = [
+  'reactivity'
+]
 
 function runParallel(source, iteratorFn) {
   const ret = []

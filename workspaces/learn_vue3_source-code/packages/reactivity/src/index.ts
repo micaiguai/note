@@ -1,9 +1,9 @@
-import shared from '@vue/shared'
-
-console.log('shared :', shared)
-
-const reactivity = {
-  name: 'reactivity'
-}
-
-export default reactivity
+export {
+  reactive,
+  shallowReactive,
+  readonly,
+  shallowReadonly
+} from './reactive'
+export {
+  effect
+} from './effect'

@@ -19,15 +19,15 @@ console.log('packageOptions :', packageOptions)
 
 const outputConfigs = {
   'esm-bundler': {
-    file: resolve(`dist/${name}.esm-bundler.js`),
+    file: resolve(`dist/${process.env.TARGET}.esm-bundler.js`),
     format: 'es'
   },
   'cjs': {
-    file: resolve(`dist/${name}.cjs.js`),
+    file: resolve(`dist/${process.env.TARGET}.cjs.js`),
     format: 'cjs'
   },
   'global': {
-    file: resolve(`dist/${name}.global.js`),
+    file: resolve(`dist/${process.env.TARGET}.global.js`),
     format: 'iife'
   },
 }
@@ -47,7 +47,8 @@ function createConfig(format, output) {
     output,
     plugins: [
       typescript({
-        sourceMap: true
+        sourceMap: true,
+        inlineSources: true
       })
     ]
   }

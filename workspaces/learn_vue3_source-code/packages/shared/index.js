@@ -1,1 +1,1 @@
-module.exports = require('./dist/shared.cjs.js')
+// module.exports = require('./dist/shared.cjs.js')
