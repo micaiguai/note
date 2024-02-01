@@ -1,4 +1,4 @@
-import { readdir } from 'fs/promises'
+import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'path'
 
 const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_(\S+)(\.\S+)?/
@@ -39,18 +39,28 @@ async function generateFiles(folderName) {
   // 读取文件
   const fileNames = await readdir(resolve(process.cwd(), `./${folderName}`))
   // 整理文件信息，排序
-  let fileInfos = fileNames.map(fileName => {
-    const matchResult = fileName.match(folderOrFileRegExp)
-    if (!matchResult) {
-      return
-    }
-    const [entireStr, sortNum, text] = matchResult
-    return {
-      text,
-      sortNum: Number(sortNum),
-      link: `/${join(folderName, fileName)}`
-    }
-  }).filter(item => item)
+  let fileInfos = fileNames
+    .map(fileName => {
+      const matchResult = fileName.match(folderOrFileRegExp)
+      if (!matchResult) {
+        return
+      }
+      const [entireStr, sortNum, text] = matchResult
+      return {
+        text,
+        sortNum: Number(sortNum),
+        link: `/${join(folderName, fileName)}`
+      }
+    })
+    .filter(item => {
+      if (!item) {
+        return false
+      }
+      if (/\?/.test(item.text)) {
+        return false
+      }
+      return true
+    })
   fileInfos.sort((fileInfoA, fileInfoB) => {
     return fileInfoA.sortNum - fileInfoB.sortNum
   })
@@ -64,13 +74,23 @@ async function generateFiles(folderName) {
   return fileInfos
 }
 
-const folders = await generateFolders([
-  './100_js',
-  './200_设计模式',
-  './300_vue2',
-  './10000_vitePress',
-  './20000_微前端',
-])
+const folders = (await readdir('/Users/m/zhangshiyu/workspace/my_note'))
+  .map(el => {
+    const res = el.match(/(^[0-9]*)_\??.*/)
+    if (res) {
+      return {
+        path: `./${el}`,
+        isValid: true
+      }
+    } else {
+      return {
+        isValid: false
+      }
+    }
+  })
+  .filter(el => el.isValid)
+  .map(el => el.path)
+const sidebar = await generateFolders(folders)
 
 // /**
 //  * 处理文件夹或文件数组
@@ -86,9 +106,13 @@ export default {
   srcDir: '.',
   srcExclude: [
     // 不是以数字开头的文件夹会被忽略
-    '[^0-9]**/**/*.md'
+    '[^0-9]*/**',
+    // 600_?typescript/**
+    '[0-9]*[?]*/**',
+    // 500_node/200_?execa.md
+    '**/[0-9]*[?]*'
   ],
   themeConfig: {
-    sidebar: folders
+    sidebar: sidebar
   }
 }
