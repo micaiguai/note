@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const xhr = new XMLHttpRequest()
+    console.log('start :', performance.now())
+    xhr.open('get', 'https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=100')
+    xhr.addEventListener('progress', e => {
+      console.log('e :', e)
+      console.log('progress :', performance.now())
+    })
+    xhr.addEventListener('loadstart', e => {
+      console.log('loadstart :', performance.now())
+    })
+    xhr.addEventListener('load', e => {
+      console.log('load :', performance.now())
+    })
+    xhr.addEventListener('loadend', e => {
+      console.log('loadend :', performance.now())
+    })
+    xhr.addEventListener('error', e => {
+      console.log('error :', performance.now())
+    })
+    xhr.addEventListener('abort', e => {
+      console.log('abort :', performance.now())
+    })
+    xhr.send()
+  </script>
+</body>
+</html>
