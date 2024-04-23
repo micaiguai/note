@@ -20,9 +20,6 @@ console.log(cat.skills === pig.skills)
 // output: true
 console.log(cat.hobbies === pig.hobbies)
 // output: { hobbies: [ 'eat' ] }
-{ 
-  hobbies: ['eat'] 
-}
 console.log(Animal.prototype)
 // output: true
 console.log(cat.__proto__ === Animal.prototype)

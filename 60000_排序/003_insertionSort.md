@@ -2,15 +2,14 @@
 
 ## 实现
 ```js
-function insertionSort(nums) {
-  for (let i = 1; i < nums.length; i++) {
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
     let j = i - 1
-    const cur = nums[i]
-    while (j > -1 && cur < nums[j]) {
+    const cur = arr[i]
+    while (j >= 0 && cur < arr[j]) {
+      [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]]
       j--
-      nums[j + 1] = nums[j]
     }
-    nums[j] = cur
   }
 }
 ```
