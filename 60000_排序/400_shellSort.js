@@ -1,14 +1,10 @@
-# shellSort
-
-## 实现
-```js
-function shellSort(nums) {
+export function shellSort(nums) {
   let gap = Math.floor(nums.length / 2)
-  while (gap > 0) {
-    for (let i = gap; i < nums.length; i += gap) {
+  while (gap >= 1) {
+    for (let i = gap; i < nums.length; i++) {
       let j = i - gap
       const cur = nums[i]
-      while (j > -1 && cur < nums[j]) {
+      while (j >= 0 && cur < nums[j]) {
         nums[j + gap] = nums[j]
         j -= gap
       }
@@ -17,4 +13,3 @@ function shellSort(nums) {
     gap = Math.floor(gap / 2)
   }
 }
-```
