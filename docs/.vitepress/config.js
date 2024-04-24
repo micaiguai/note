@@ -74,7 +74,7 @@ async function generateFiles(folderName) {
   return fileInfos
 }
 
-const folders = (await readdir('/Users/m/zhangshiyu/workspace/my_note'))
+const folders = (await readdir('/Users/m/zhangshiyu/workspace/my_note/notes'))
   .map(el => {
     const res = el.match(/(^[0-9]*)_\??.*/)
     if (res) {
@@ -105,12 +105,12 @@ export default {
   base: `${process.env.BASE}`,
   srcDir: '.',
   srcExclude: [
-    // 不是以数字开头的文件夹会被忽略
-    '[^0-9]*/**',
-    // 600_?typescript/**
-    '[0-9]*[?]*/**',
-    // 500_node/200_?execa.md
-    '**/[0-9]*[?]*'
+    // // 不是以数字开头的文件夹会被忽略
+    // '[^0-9]*/**',
+    // // 600_?typescript/**
+    // '[0-9]*[?]*/**',
+    // // 500_node/200_?execa.md
+    // '**/[0-9]*[?]*'
   ],
   themeConfig: {
     sidebar: sidebar
