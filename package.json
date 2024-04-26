@@ -6,6 +6,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "vitest",
+		"html:dev": "serve playground",
 		"docs:dev": "cross-env BASE=/notes/ vitepress dev",
 		"docs:build": "cross-env BASE=/notes/ vitepress build",
 		"docs:preview": "vitepress preview",
@@ -17,7 +18,7 @@
 		"@babel/preset-env": "^7.23.6",
 		"cross-env": "^7.0.3",
 		"promises-aplus-tests": "^2.1.2",
-		"vitepress": "1.0.0-rc.33",
+		"serve": "^14.2.2",
 		"vitest": "^1.5.0"
 	},
 	"dependencies": {
