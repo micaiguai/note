@@ -1,0 +1,128 @@
+{
+  "folders": [
+    {
+      "order": 100,
+      "name": "js",
+      "children": [
+        { "order": 100, "name": "var&&let&&const", "extension": "md" },
+        { "order": 200, "name": "spread", "extension": "md" },
+        { "order": 250, "name": "clone", "extension": "md" },
+        { "order": 300, "name": "set&&map&&weakMap", "extension": "md" },
+        { "order": 400, "name": "defineProperty", "extension": "md" },
+        { "order": 500, "name": "arrowFn", "extension": "md" },
+        { "order": 550, "name": "this", "extension": "md" },
+        { "order": 600, "name": "proxy", "extension": "md" },
+        { "order": 700, "name": "array", "extension": "md" },
+        { "order": 800, "name": "class", "extension": "md" },
+        { "order": 900, "name": "es6-class", "extension": "md" },
+        { "order": 1000, "name": "class-decorator", "extension": "md" },
+        { "order": 1100, "name": "higher-order-function", "extension": "md" },
+        { "order": 1200, "name": "promise", "extension": "md" },
+        { "order": 1300, "name": "generator", "extension": "md" },
+        { "order": 10000, "name": "手写new", "extension": "md" },
+        { "order": 10100, "name": "手写系列", "extension": "md" },
+        { "order": 20000, "name": "IntersectionObserver", "extension": "md" },
+        {
+          "order": 30000,
+          "name": "addEventListener&&dispatchEvent",
+          "extension": "md"
+        },
+        { "order": 50000, "name": "webWork", "extension": "md" },
+        { "order": 60000, "name": "for-await", "extension": "md" }
+      ]
+    },
+    {
+      "order": 200,
+      "name": "设计模式",
+      "children": [
+        { "order": 100, "name": "发布订阅模式", "extension": "md" },
+        { "order": 200, "name": "观察者模式", "extension": "md" }
+      ]
+    },
+    {
+      "order": 300,
+      "name": "vue2",
+      "children": [
+        { "order": 100, "name": "index", "extension": "md" },
+        { "order": 100, "name": "rollup", "extension": "md" },
+        { "order": 200, "name": "router", "extension": "md" }
+      ]
+    },
+    {
+      "order": 400,
+      "name": "vue3",
+      "children": [
+        { "order": 100, "name": "index", "extension": "md" },
+        { "order": 200, "name": "Fragment", "extension": "md" },
+        { "order": 300, "name": "Suspense", "extension": "md" },
+        {
+          "order": 400,
+          "name": "VueRouter的hash模式和history模式",
+          "extension": "md"
+        }
+      ]
+    },
+    {
+      "order": 500,
+      "name": "node",
+      "children": [
+        { "order": 100, "name": "index", "extension": "md" },
+        { "order": 200, "name": "execa", "extension": "md" },
+        { "order": 300, "name": "环境变量", "extension": "md" }
+      ]
+    },
+    {
+      "order": 600,
+      "name": "typescript",
+      "children": [
+        { "order": 100, "name": "index", "extension": "md" },
+        { "order": 200, "name": "tsconfig", "extension": "md" },
+        { "order": 300, "name": "explicit-types", "extension": "md" }
+      ]
+    },
+    {
+      "order": 10000,
+      "name": "vitePress",
+      "children": [{ "order": 100, "name": "index", "extension": "md" }]
+    },
+    {
+      "order": 20000,
+      "name": "微前端",
+      "children": [{ "order": 100, "name": "index", "extension": "md" }]
+    },
+    {
+      "order": 30000,
+      "name": "快捷键",
+      "children": [{ "order": 100, "name": "index", "extension": "md" }]
+    },
+    {
+      "order": 40000,
+      "name": "linux",
+      "children": [{ "order": 100, "name": "index", "extension": "md" }]
+    },
+    {
+      "order": 50000,
+      "name": "leetcode",
+      "children": [{ "order": 4, "name": "215", "extension": "md" }]
+    },
+    {
+      "order": 60000,
+      "name": "排序",
+      "children": [
+        { "order": 100, "name": "bubbleSort", "extension": "md" },
+        { "order": 200, "name": "selectionSort", "extension": "md" },
+        { "order": 300, "name": "insertionSort", "extension": "md" },
+        { "order": 400, "name": "shellSort", "extension": "md" },
+        { "order": 500, "name": "mergeSort", "extension": "md" },
+        { "order": 600, "name": "quickSort", "extension": "md" },
+        { "order": 700, "name": "heapSort", "extension": "md" },
+        { "order": 800, "name": "countingSort", "extension": "md" }
+      ]
+    },
+    {
+      "order": 70000,
+      "name": "nestjs",
+      "children": [{ "order": 100, "name": "index", "extension": "md" }]
+    }
+  ]
+}
