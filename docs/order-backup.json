@@ -4,9 +4,9 @@
       "order": 100,
       "name": "js",
       "children": [
+        { "order": 100, "name": "var&&let&&const", "extension": "md" },
         { "order": 200, "name": "spread", "extension": "md" },
         { "order": 250, "name": "clone", "extension": "md" },
-        { "order": 100, "name": "var、let、const", "extension": "md" },
         { "order": 300, "name": "set&&map&&weakMap", "extension": "md" },
         { "order": 400, "name": "defineProperty", "extension": "md" },
         { "order": 500, "name": "arrowFn", "extension": "md" },
