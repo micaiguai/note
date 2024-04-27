@@ -31,10 +31,13 @@ type RecurseWrap<T extends unknown[] | object> = {
         : never
 }
 
+let flag = 0
 async function watchGroups() {
   // let jsonSnapshot = await readFile(dirResolve('order.json'), { encoding: 'utf-8' })
   // console.log('orderJson :', orderJson)
-  watch(dirResolve('groups'), { recursive: true }, async (cur, filename) => {
+  watch(dirResolve('groups'), { recursive: true }, async (type, filename) => {
+    console.log('flag :', flag++)
+    console.log('type :', type)
     console.log('filename :', filename)
     // const dirResult = await readdir(dirResolve('groups'), { recursive: true })
     // console.log('dirResult :', dirResult)
