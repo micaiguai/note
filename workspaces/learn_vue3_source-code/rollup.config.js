@@ -9,7 +9,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const packagesDir = path.resolve(__dirname, 'packages')
 const packageDir = path.resolve(packagesDir, process.env.TARGET)
 const name = path.basename(packagesDir)
-const resolve = (p) => {
+function resolve(p) {
   return path.resolve(packageDir, p)
 }
 const pkg = require(resolve('package.json'))
@@ -20,36 +20,36 @@ console.log('packageOptions :', packageOptions)
 const outputConfigs = {
   'esm-bundler': {
     file: resolve(`dist/${process.env.TARGET}.esm-bundler.js`),
-    format: 'es'
+    format: 'es',
   },
   'cjs': {
     file: resolve(`dist/${process.env.TARGET}.cjs.js`),
-    format: 'cjs'
+    format: 'cjs',
   },
   'global': {
     file: resolve(`dist/${process.env.TARGET}.global.js`),
-    format: 'iife'
+    format: 'iife',
   },
 }
 
-export default packageOptions.formats.map(format => {
+export default packageOptions.formats.map((format) => {
   return createConfig(format, outputConfigs[format])
 })
 
 function createConfig(format, output) {
   const isGlobalBuild = /global/.test(format)
   output.sourcemap = true
-  if (isGlobalBuild) {
+  if (isGlobalBuild)
     output.name = packageOptions.name
-  }
+
   return {
     input: resolve('src/index.ts'),
     output,
     plugins: [
       typescript({
         sourceMap: true,
-        inlineSources: true
-      })
-    ]
+        inlineSources: true,
+      }),
+    ],
   }
 }

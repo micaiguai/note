@@ -1,19 +1,20 @@
-import { watch } from "fs"
-import { dirResolve } from "./utils.mts"
-import { readFile, readdir } from "fs/promises"
+import { readFile } from 'node:fs/promises'
+import type { Stats } from 'node:fs'
 import { diff } from 'json-diff'
-// import { detailedDiff } from 'deep-object-diff'
-import { Folder } from "."
+import { watch } from 'chokidar'
+import { dirResolve } from './utils.mts'
+import { configFilename } from './config.mts'
+import type { Folder } from '.'
 
 type Flag = ' ' | '~' | '+' | '-'
 
-type WrapNewAndOld<T> = {
+interface WrapNewAndOld<T> {
   __new: T
   __old: T
 }
 type WrapItem<T> = [
   Flag,
-  T
+  T,
 ]
 
 export type MergeInsertions<T> =
@@ -31,35 +32,20 @@ type RecurseWrap<T extends unknown[] | object> = {
         : never
 }
 
-let flag = 0
 async function watchGroups() {
-  // let jsonSnapshot = await readFile(dirResolve('order.json'), { encoding: 'utf-8' })
-  // console.log('orderJson :', orderJson)
-  watch(dirResolve('groups'), { recursive: true }, async (type, filename) => {
-    console.log('flag :', flag++)
-    console.log('type :', type)
-    console.log('filename :', filename)
-    // const dirResult = await readdir(dirResolve('groups'), { recursive: true })
-    // console.log('dirResult :', dirResult)
-    // const json = await readFile(dirResolve('order.json'), { encoding: 'utf-8' })
-    // console.log('json :', json)
-    // const diffResult: { folders: RecurseWrap<Folder[]> } = diff(JSON.parse(jsonSnapshot), JSON.parse(json), { full: true })
-    // diff(JSON.parse(jsonSnapshot), JSON.parse(json))
-    // jsonSnapshot = json
-    // const folders = diffResult.folders
-    // if (typeof folders[0].name === 'object') {
-    //   folders[0].name.__new = '123'
-    // }
-  })
-  dirResolve()
+  let ready = false
+  const jsonSnapshot = await readFile(dirResolve('docs', configFilename), { encoding: 'utf-8' })
+  const json = await readFile(dirResolve('docs', configFilename), { encoding: 'utf-8' })
+  const diffResult: { folders: RecurseWrap<Folder> } = diff(JSON.parse(jsonSnapshot), JSON.parse(json), { full: true })
+  const watcher = watch(dirResolve('docs', 'notes'))
+  watcher
+    .on('ready', () => ready = true)
+    .on('all', (eventName: 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir', path: string, stats?: Stats) => {
+      if (!ready)
+        return
+      console.log(eventName, path)
+    })
+  return diffResult
 }
-
-// function diff(oldItems: Folder[], newItems: Folder[]) {
-//   let oldStart = 0
-//   let oldEnd = oldItems.length - 1
-//   let newStart = 0
-//   let newEnd = newItems.length - 1
-  
-// }
 
 watchGroups()

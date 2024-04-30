@@ -1,10 +1,10 @@
-export type File = {
+export interface File {
   originName: string
   name: string
   extension: 'md' | string
 }
 
-export type Folder = {
+export interface Folder {
   originName: string
   name: string
   children: File[]

@@ -1,9 +1,9 @@
-import { describe, test, expect } from "vitest";
-import { myDebounce, myThrottle, myInstanceOf, myCall, myApply, myBind, myDeepClone, myNew, myCurry } from '../10100_手写系列.js'
+import { describe, expect, it } from 'vitest'
+import { myApply, myBind, myCall, myCurry, myDebounce, myDeepClone, myInstanceOf, myNew, myThrottle } from '../10100_手写系列.js'
 
 describe('手写', () => {
   /** TODO: not working */
-  test('debounce', () => {
+  it('debounce', () => {
     let count = 0
     function add() {
       count++
@@ -18,7 +18,7 @@ describe('手写', () => {
     }, 300)
   })
   /** TODO: not working */
-  test('throttle', () => {
+  it('throttle', () => {
     let count = 0
     function add() {
       console.log('add')
@@ -35,19 +35,19 @@ describe('手写', () => {
       expect(count).toBe(3)
     }, 1000)
   })
-  test('instance', () => {
+  it('instance', () => {
     class Animal {}
     class Cat extends Animal {}
     const cat = new Cat()
     expect(myInstanceOf(cat, Animal)).toBe(true)
   })
   /** TODO: Function.prototype.myCall会不会影响其他测试用例 */
-  test('call', () => {
+  it('call', () => {
     Function.prototype.myCall = myCall
     function getThis(...args) {
       return {
         this: this,
-        args: args
+        args,
       }
     }
     const cat = {}
@@ -55,12 +55,12 @@ describe('手写', () => {
     expect(getThis.myCall(cat, ...args).this).toBe(cat)
     expect(getThis.myCall(cat, ...args).args).toEqual(args)
   })
-  test('apply', () => {
+  it('apply', () => {
     Function.prototype.myApply = myApply
     function getThis(...args) {
       return {
         this: this,
-        args: args
+        args,
       }
     }
     const cat = {}
@@ -68,12 +68,12 @@ describe('手写', () => {
     expect(getThis.myApply(cat, args).this).toBe(cat)
     expect(getThis.myApply(cat, args).args).toEqual(args)
   })
-  test('bind', () => {
+  it('bind', () => {
     Function.prototype.myBind = myBind
     function getThis(...args) {
       return {
         this: this,
-        args: args
+        args,
       }
     }
     const cat = {}
@@ -81,7 +81,7 @@ describe('手写', () => {
     expect(getThis.myBind(cat, ...args)().this).toBe(cat)
     expect(getThis.myBind(cat, ...args)().args).toEqual(args)
   })
-  test('myDeepClone', () => {
+  it('myDeepClone', () => {
     const cat = {
       name: 'snow',
       hobbies: ['eat', 'play'],
@@ -93,12 +93,12 @@ describe('手写', () => {
     expect(catClone.hobbies).toEqual(cat.hobbies)
     expect(catClone.relations).toEqual(cat.relations)
   })
-  test('myNew', () => {
+  it('myNew', () => {
     function Cat(name, age) {
       this.name = name
       this.age = age
     }
-    Cat.prototype.getInfo = function() {
+    Cat.prototype.getInfo = function () {
       return `${this.name}: ${this.age}`
     }
     const cat = myNew(Cat, 'snow', 3)
@@ -106,7 +106,7 @@ describe('手写', () => {
     expect(cat.age).toBe(3)
     expect(cat.getInfo()).toBe('snow: 3')
   })
-  test('myCurry', () => {
+  it('myCurry', () => {
     function add(a, b, c) {
       return a + b + c
     }

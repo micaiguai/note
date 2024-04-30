@@ -13,13 +13,16 @@
 		"docs:deploy": "chmod +x scripts/uploadNote.js && scripts/uploadNote.js"
 	},
 	"devDependencies": {
+		"@antfu/eslint-config": "^2.16.0",
 		"@babel/cli": "^7.23.4",
 		"@babel/plugin-proposal-decorators": "^7.23.6",
 		"@babel/preset-env": "^7.23.6",
 		"@types/json-diff": "^1.0.3",
 		"@types/node": "^20.12.7",
 		"@types/webpack": "^5.28.5",
+		"chokidar": "^3.6.0",
 		"cross-env": "^7.0.3",
+		"eslint": "^9.1.1",
 		"json-diff": "^1.0.6",
 		"nodemon": "^3.1.0",
 		"promises-aplus-tests": "^2.1.2",
