@@ -2,7 +2,7 @@ import {
   isReactive,
   isRef,
   toRaw
-} from "./chunk-CEJ63REX.js";
+} from "./chunk-2RIESWXO.js";
 
 // node_modules/.pnpm/@vue+devtools-shared@7.1.2/node_modules/@vue/devtools-shared/dist/index.js
 var __create = Object.create;
@@ -520,7 +520,7 @@ async function _applyPromised(fn, _this, args) {
   return await fn.apply(_this, args);
 }
 
-// node_modules/.pnpm/@vue+devtools-kit@7.1.2_vue@3.4.24/node_modules/@vue/devtools-kit/dist/index.js
+// node_modules/.pnpm/@vue+devtools-kit@7.1.2_vue@3.4.24_typescript@5.4.5_/node_modules/@vue/devtools-kit/dist/index.js
 var __create2 = Object.create;
 var __defProp2 = Object.defineProperty;
 var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
