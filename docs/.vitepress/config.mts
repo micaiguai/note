@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path'
 import { cwd } from 'node:process'
 import { defineConfig } from 'vitepress'
 
-const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_(\S+)(\.\S+)?/
+const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_([^\.]+)(\.)?(\S+)?/
 
 interface File {
   text: string
@@ -13,7 +13,7 @@ interface File {
 interface Folder {
   text: string
   sort: number
-  children: File[]
+  items: File[]
 }
 
 /**
@@ -24,6 +24,7 @@ interface Folder {
 async function generateFolders(folderNames) {
   let folderInfos: Folder[] = await Promise.all(
     folderNames.map(async (folderName) => {
+      console.log('folderName :', folderName)
       // eslint-disable-next-line unused-imports/no-unused-vars
       const [entireStr, sortNum, text] = folderName.match(folderOrFileRegExp)
       return {
@@ -61,16 +62,20 @@ async function generateFiles(folderName: string) {
       if (matchResult === null)
         return undefined
       // eslint-disable-next-line unused-imports/no-unused-vars
-      const [entireStr, sortNum, text] = matchResult
+      const [entireStr, sortNum, text, dot, extension] = matchResult
+      const isFile = !!extension
       return {
         text,
         sort: +sortNum,
-        link: `/${join('notes', folderName, fileName)}`,
+        link: isFile ? `/${join('notes', folderName, fileName)}` : `/${join('notes', folderName, fileName, 'index.md')}`,
+        meta: {
+          extension,
+        },
       }
     })
-    // 过滤空
+    // 过滤空 或 拓展不是markdown的文件
     .filter((item) => {
-      return !!item
+      return item !== undefined
     })
     // 排序
     .sort((fileInfoA, fileInfoB) => {
