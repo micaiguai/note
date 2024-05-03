@@ -90,7 +90,7 @@ async function generateFiles(folderName: string) {
   return fileInfos
 }
 
-const folders = (await readdir('/Users/m/zhangshiyu/workspace/my_note/docs/notes'))
+const folders = (await readdir(resolve(cwd(), 'notes')))
   .filter((folderName) => {
     const valid = /(^[0-9]*)_\??.*/.test(folderName)
     return valid
