@@ -33,7 +33,7 @@
 4. `css-in-js`
 
 ## 生命周期
-![生命周期](../assets/20000_100_微前端-生命周期.png)
+![生命周期](../../assets/20000_100_微前端-生命周期.png)
 
 ### shadowDOM实践
 ```html
@@ -99,13 +99,13 @@ class SnapshotSandbox {
 
   constructor() {}
   active() {
-    for (const key in window) {
+    for (const key in window)
       this.windowSnapshot[key] = window[key]
-    }
-    for (const key in this.modifyPropsMap) {
+
+    for (const key in this.modifyPropsMap)
       window[key] = this.modifyPropsMap[key]
-    }
   }
+
   inactive() {
     for (const key in window) {
       if (window[key] !== this.windowSnapshot[key]) {
@@ -161,22 +161,23 @@ class LegacyProxy {
         },
         set: (target, prop, newVal, receiver) => {
           // 如果当前沙箱停止，返回
-          if (!this.sandboxRunning) {
+          if (!this.sandboxRunning)
             return true
-          }
+
           // 如果window上没有这个prop，记录在addedPropsMapInSandbox中
           if (!window.hasOwnProperty(prop)) {
             this.addedPropsMapInSandbox[prop] = newVal
             // 如果window上有这个prop，说明这个prop是更改 且 modifiedPropsOriginalValueMapInSandbox没有这个prop
             // 则备份window上的数据到modifiedPropsOriginalValueMapInSandbox中
-          } else if (modifiedPropsOriginalValueMapInSandbox.hasOwnProperty(prop)) {
+          }
+          else if (modifiedPropsOriginalValueMapInSandbox.hasOwnProperty(prop)) {
             const originVal = window[prop]
             this.modifiedPropsOriginalValueMapInSandbox[prop] = originVal
           }
           // 记录set的操作
           this.currentUpdatedPropsValueMap[prop] = newVal
           window[prop] = newVal
-          return true 
+          return true
         }
       }
     )
@@ -185,22 +186,20 @@ class LegacyProxy {
   active() {
     this.sandboxRunning = true
     // 恢复currentUpdatedPropsValueMap至window上
-    for (const prop in this.currentUpdatedPropsValueMap) {
+    for (const prop in this.currentUpdatedPropsValueMap)
       window[prop] = this.currentUpdatedPropsValueMap[prop]
-    }
   }
 
   inactive() {
     this.sandboxRunning = false
     // 恢复window
     // 1. 移除window在addedPropsMapInSandbox记录的prop
-    for (const prop in this.addedPropsMapInSandbox) {
+    for (const prop in this.addedPropsMapInSandbox)
       delete window[prop]
-    }
+
     // 2. 恢复window在modifiedPropsOriginalValueMapInSandbox记录的prop
-    for (const prop in this.modifiedPropsOriginalValueMapInSandbox) {
+    for (const prop in this.modifiedPropsOriginalValueMapInSandbox)
       window[prop] = this.modifiedPropsOriginalValueMapInSandbox[prop]
-    }
   }
 }
 
@@ -234,23 +233,24 @@ class ProxySandbox {
     const fakeWindow = Object.create(null)
     this.proxyWindow = new Proxy(fakeWindow, {
       get: (target, prop, receiver) => {
-        if (prop in target) {
+        if (prop in target)
           return Reflect.get(target, prop, receiver)
-        } else {
+        else
           return Reflect.get(window, prop, receiver)
-        }
       },
       set: (target, prop, newVal, receiver) => {
-        if (!this.activeFlag) {
+        if (!this.activeFlag)
           return false
-        }
+
         Reflect.set(target, prop, newVal, receiver)
       }
     })
   }
+
   active() {
     this.activeFlag = true
   }
+
   inactive() {
     this.activeFlag = false
   }
@@ -278,4 +278,4 @@ console.log(window.foo)
 ```
 
 ## 流程图
-![流程图](../assets/20000_100_微前端-流程图.svg)
+![流程图](../../assets/20000_100_微前端-流程图.svg)

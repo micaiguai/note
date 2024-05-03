@@ -28,7 +28,7 @@ console.log(cat.__proto__.__proto__ === Object.prototype)
 // output: true
 console.log(Animal.__proto__ === Function.prototype)
 ```
-![image](../assets/100_800_2023-12-10_原型图.png)
+![image](../../assets/100_800_2023-12-10_原型图.png)
 
 ## 继承
 ```js
@@ -48,11 +48,11 @@ Object.setPrototypeOf(Cat.prototype, Animal.prototype)
 // Cat.prototype.__proto__ = Animal.prototype
 // 3. Object.create
 // Cat.prototype = Object.create(
-//   Animal.prototype, 
+//   Animal.prototype,
 //   {
 //     constructor: {
 //       value: Cat
-//     } 
+//     }
 //   }
 // )
 // 4. 手写create
@@ -75,4 +75,3 @@ console.log(cat.cuteFlag)
 // output: [Function: Cat]
 console.log(cat.constructor)
 ```
-
