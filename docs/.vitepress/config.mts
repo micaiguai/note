@@ -24,7 +24,6 @@ interface Folder {
 async function generateFolders(folderNames) {
   let folderInfos: Folder[] = await Promise.all(
     folderNames.map(async (folderName) => {
-      console.log('folderName :', folderName)
       // eslint-disable-next-line unused-imports/no-unused-vars
       const [entireStr, sortNum, text] = folderName.match(folderOrFileRegExp)
       return {
@@ -97,11 +96,10 @@ const folders = (await readdir('/Users/m/zhangshiyu/workspace/my_note/docs/notes
     return valid
   })
 const sidebar = await generateFolders(folders)
-console.log('sidebar :', sidebar)
-console.log('sidebar[0] :', sidebar[0])
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/notes',
   title: 'MCG',
   description: 'MCG INTRODUCE',
   themeConfig: {
