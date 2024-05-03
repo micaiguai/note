@@ -29,7 +29,6 @@ jobs:
           pnpm i
       - name: build
         run: |
-          cd docs
           pnpm run build
       # - name: artifact
       #   uses: actions/upload-pages-artifact@v3
