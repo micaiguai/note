@@ -39,7 +39,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          publish_dir: docs/dist
+          publish_dir: docs/.vitepress/dist
           destination_dir: notes
           publish_branch: main
           external_repository: micaiguai/micaiguai.github.io
