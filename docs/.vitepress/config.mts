@@ -2,6 +2,7 @@ import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { cwd } from 'node:process'
 import { defineConfig } from 'vitepress'
+import Nzh from 'nzh'
 
 const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_([^\.]+)(\.)?(\S+)?/
 
@@ -37,10 +38,10 @@ async function generateFolders(folderNames) {
     .sort((folderInfoA, folderInfoB) => {
       return folderInfoA.sort - folderInfoB.sort
     })
-    .map((fileInfo, fileInfoIndex) => {
+    .map((folderInfo, folderInfoIndex) => {
       return {
-        ...fileInfo,
-        text: `${fileInfoIndex + 1}. ${fileInfo.text}`,
+        ...folderInfo,
+        text: `${Nzh.cn.encodeS(folderInfoIndex + 1)}、${folderInfo.text}`,
       }
     })
   return folderInfos
@@ -74,7 +75,11 @@ async function generateFiles(folderName: string) {
     })
     // 过滤空 或 拓展不是markdown的文件
     .filter((item) => {
-      return item !== undefined
+      if (item === undefined)
+        return false
+      if (item.meta.extension === undefined)
+        return true
+      return item.meta.extension === 'md'
     })
     // 排序
     .sort((fileInfoA, fileInfoB) => {

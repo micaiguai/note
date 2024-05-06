@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      nzh:
+        specifier: ^1.0.12
+        version: 1.0.12
     devDependencies:
       chokidar:
         specifier: ^3.6.0
@@ -1007,6 +1011,9 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
+
+  nzh@1.0.12:
+    resolution: {integrity: sha512-6nOlvAv9qFg0itfqNDJoOUHsItO/bTTGyHUi7DsgX10KG8iY6u8xz3oI7jfu+/v5xcVXIQIucuaoiQ7LI2RRIA==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -2216,6 +2223,8 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+
+  nzh@1.0.12: {}
 
   object-assign@4.1.1: {}
 
