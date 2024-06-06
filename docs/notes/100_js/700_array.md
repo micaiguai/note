@@ -45,12 +45,13 @@ console.log(result)
 ```
 ### 手写reduce
 ```js
-Array.prototype.reduce = function(callback, initial) {
+Array.prototype.reduce = function (callback, initial) {
   for (let index = 0; index < this.length; index++) {
     if (initial === undefined) {
       initial = callback(this[index], this[index + 1], index + 1, this)
       index++
-    } else {
+    }
+    else {
       initial = callback(initial, this[index], index, this)
     }
   }
