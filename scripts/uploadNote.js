@@ -1,5 +1,5 @@
 #!/usr/bin/env zx
-import { join } from 'path'
+import { join } from 'node:path'
 
 const WORKSPACE_PATH = '/Users/m/zhangshiyu/workspace'
 const GITHUB_IO_NAME = 'my_micaiguai.github.io'
