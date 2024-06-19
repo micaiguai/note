@@ -13,6 +13,8 @@ interface File {
 }
 interface Folder {
   text: string
+  plainName: string
+  folderName: string
   sort: number
   items: File[]
 }
@@ -28,6 +30,7 @@ async function generateFolders(folderNames) {
       // eslint-disable-next-line unused-imports/no-unused-vars
       const [entireStr, sortNum, text] = folderName.match(folderOrFileRegExp)
       return {
+        folderName,
         text,
         sort: +sortNum,
         items: await generateFiles(folderName),
@@ -41,6 +44,8 @@ async function generateFolders(folderNames) {
     .map((folderInfo, folderInfoIndex) => {
       return {
         ...folderInfo,
+        plainName: folderInfo.text,
+        folderName: folderInfo.folderName,
         text: `${Nzh.cn.encodeS(folderInfoIndex + 1)}、${folderInfo.text}`,
       }
     })
@@ -100,18 +105,39 @@ const folders = (await readdir(resolve(cwd(), 'notes')))
     const valid = /(^[0-9]*)_\??.*/.test(folderName)
     return valid
   })
-const sidebar = await generateFolders(folders)
+const originSidebar = await generateFolders(folders)
+const sidebar = genSidebar(originSidebar)
+
+function genSidebar(originSidebar: Folder[]) {
+  const result = {}
+  originSidebar.forEach((folder) => {
+    result[`/notes/${folder.folderName}/`] = folder.items
+  })
+  console.log('result :', result)
+  return result
+}
+
+function genNav(folder: Folder) {
+  return {
+    text: folder.plainName,
+    link: folder.items[0].link,
+    activeMatch: `/${folder.folderName}/`,
+  }
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/notes',
+  base: '/',
   title: 'MCG',
   description: 'MCG INTRODUCE',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
+      ...originSidebar.slice(0, 5).map(folder => genNav(folder)),
+      {
+        text: 'more',
+        items: originSidebar.slice(5).map(folder => genNav(folder)),
+      },
     ],
     search: {
       provider: 'local',
