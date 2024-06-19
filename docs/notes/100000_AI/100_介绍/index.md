@@ -1,10 +1,11 @@
-## 1. AIGC
+# AI
+## AIGC
 `AIGC`（AI Generated Content）是AI生成的内容。
 
-## 2. 生成式AI
+## 生成式AI
 生成式AI（generative AI）所生成的内容即为`AIGC`。
 
-## 3. 技术架构
+## 技术架构
 ![alt text](/notes/100000_AI/100_介绍/assets/image-1.png)
 1. AI：计算机模拟人类的智能
 2. 机器学习：不通过编程，而是通过代码自己学习来实现决策
@@ -23,40 +24,40 @@
 5. 大语言模型（Large Language Models）：是深度学习的一种应用。用于处理自然语言数据。
   ![alt text](/notes/100000_AI/100_介绍/assets/image-7.png)
 
-## 4. 生成式AI和大语言模型
+## 生成式AI和大语言模型
 两者**互不包含**
 ![alt text](/notes/100000_AI/100_介绍/assets/image-8.png)
 
-## 5. 大语言模型
+## 大语言模型
 大语言模型是做**自然语言处理**的模型。具体任务可以是**生成**、**分类**、**总结**、**改写**等。
 如何理解大语言模型的大？**训练数据量大**和**参数数量大**。可以执行的任务比单个小模型多。
 
-## 6. Attention Is All You Need
+## Attention Is All You Need
 谷歌发布了一篇`Attention Is All You Need`的文章。里面提到了`Transformer`架构，这改变了自然语言处理的方式。
 
-## 7. RNN
+## RNN
 在`Transformer`诞生之前，自然语言采用的是循环神经网络`RNN`（Recurrent Neural Network）。
 ![alt text](/notes/100000_AI/100_介绍/assets/image-9.png)
 缺点：
 - 需要上一步骤的隐藏状态，无法并行执行。
 - 难以捕获长距离的语义关系
 
-## 8. Transformer
+## Transformer
 `Transformer`利用了**自注意力机制**和**位置编码**，解决了上述缺点。
 ![alt text](/notes/100000_AI/100_介绍/assets/image-10.png)
 
-## 9.自注意力机制
+## 注意力机制
 获取当前词关联的其它词的自注意力权重，匹配更合适的词。
 ![alt text](/notes/100000_AI/100_介绍/assets/image-11.png)
 
-## 10.位置编码
+## 位置编码
 将位置向量和词向量合并，交给神经网络。实现并行执行。
 ![alt text](/notes/100000_AI/100_介绍/assets/image-12.png)
 
-## 11. GPT实现原理
+##  GPT实现原理
 通过预测语句下一个生成的词，类似于谷歌搜索。
 
-## 12. Transformer实现原理
+##  Transformer实现原理
 `Transformer`包含一个编码器和一个解码器。
 执行顺序：
 1. token化
@@ -71,7 +72,7 @@
 10. 通过前馈神经网络增强表达能力
 11. 通过`leaner`和`softmax`获取关联词概率的概率分布
 
-## 13. gpt实现原理
+##  gpt实现原理
 1. 通过大量的文本数据训练出基座模型
 2. 通过监督微调，喂对话数据给模型，训练模型
 3. 训练一个奖励模型
