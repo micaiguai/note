@@ -14,9 +14,9 @@ pnpm i -D cross-env
 - [cross-env](https://www.npmjs.com/package/cross-env)
 ## rollup.config.mjs配置
 ```js
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import serve from 'rollup-plugin-serve'
-import { resolve, dirname } from 'path'
-import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -33,7 +33,7 @@ const NODE_ENV_ENUM = {
  * 生成rollup-plugin-serve配置的方法
  * @returns {object} rollup-plugin-serve配置
  */
-const pluginServe = () => {
+function pluginServe() {
   return serve({
     // 启动服务时, 是否打开网页
     open: true,
@@ -58,26 +58,25 @@ function generatePlugins() {
       pluginServe()
     ]
   }
-  if (process.env.NODE_ENV === NODE_ENV_ENUM.PRODUCTION) {
+  if (process.env.NODE_ENV === NODE_ENV_ENUM.PRODUCTION)
     plugins = []
-  }
+
   return plugins
 }
 
 export default {
   // 主文件入口
-	input: 'src/main.js',
-	output: {
+  input: 'src/main.js',
+  output: {
     // 导出文件地址
-		file: './dist/umd/vue.js',
+    file: './dist/umd/vue.js',
     // 导出文件格式
-		format: 'umd',
+    format: 'umd',
     // 导出的全局变量名称
     name: 'Vue',
     // 是否开启sourcemap
     sourcemap: true
-	},
+  },
   plugins: generatePlugins
 }
 ```
-

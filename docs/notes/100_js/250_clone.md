@@ -1,6 +1,6 @@
 # 拷贝
 ## 浅拷贝
-- [spread](./200_spread.md)
+- [spread](./200_spread/index.md)
 ## 深拷贝
 - JSON深拷贝
 ```js
