@@ -116,7 +116,7 @@ await genIndexMd(config.title, config.description, folders)
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/',
+  base: '/notes/',
   title: config.title,
   description: config.description,
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
