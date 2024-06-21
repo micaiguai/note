@@ -51,5 +51,7 @@ features:
   link: /notes/110000_渡一/100_私有字段/index.md
 - title: 面试题
   link: /notes/120000_面试题/100_数字孪生/index.md
+- title: 小程序
+  link: /notes/130000_小程序/100_生命周期/index.md
 
 ---  

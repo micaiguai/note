@@ -1,6 +1,6 @@
 import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-import { cwd } from 'node:process'
+import { cwd, env } from 'node:process'
 import { defineConfig } from 'vitepress'
 import { genIndexMd } from './utils/genIndexMd'
 import type { File, Folder } from './types'
@@ -116,7 +116,7 @@ await genIndexMd(config.title, config.description, folders)
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/notes/',
+  base: env.NODE_ENV === 'production' ? '/notes/' : '',
   title: config.title,
   description: config.description,
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
