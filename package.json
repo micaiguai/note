@@ -32,10 +32,18 @@
     "cross-env": "^7.0.3",
     "eslint": "^9.7.0",
     "json-diff": "^1.0.6",
+    "lint-staged": "^15.2.7",
     "nodemon": "^3.1.0",
     "promises-aplus-tests": "^2.1.2",
     "serve": "^14.2.2",
+    "simple-git-hooks": "^2.11.1",
     "tsup": "^8.0.2",
     "vitest": "^1.5.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }
