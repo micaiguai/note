@@ -8,11 +8,11 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "dev": "cd packages/docs && npx vitepress dev",
+    "dev": "cd packages/docs && pnpm run dev",
     "test": "vitest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:inspector": "npx @eslint/config-inspector"
+    "lint:inspector": "pnpm run @eslint/config-inspector"
   },
   "dependencies": {
     "@eslint/config-inspector": "^0.5.1",

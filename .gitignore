@@ -3,7 +3,7 @@ playground
 dist
 logs
 todo
-.vitepress/cache/**
-.vitepress/dist/**
+**/.vitepress/cache/**
+**/.vitepress/dist/**
 
 .DS_Store
