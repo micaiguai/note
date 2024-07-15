@@ -27,7 +27,7 @@ hero:
 
 features:
 ${features}
----  
+---
 `
   await writeFile(
     resolve(cwd(), 'index.md'),
