@@ -16,6 +16,13 @@
       "name": "Launch Program",
       // "program": "${workspaceFolder}/docs/scripts/watch.mts",
       "outFiles": ["${workspaceFolder}/docs/dist/*.*"]
+    },
+    // debug package.json scripts
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "debug eslint",
+      "program": "${workspaceFolder}/eslint.config.mjs"
     }
   ]
 }

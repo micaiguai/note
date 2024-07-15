@@ -1,14 +1,16 @@
 # decorator
 
 ## 例子
-```js
+```ts
 @classDecorator(true)
 class Animal {
   @readonly
   type = 'animal'
+
   constructor(name) {
     this.name = name
   }
+
   // 多个装饰器，从下至上执行，洋葱模型
   // 执行顺序:
   // 1. output: value : hello
@@ -34,9 +36,9 @@ function sayWithName(value) {
   return function (target, key, descriptor) {
     console.log('value :', value)
     const fn = descriptor.value
-    descriptor.value = function () {
+    descriptor.value = function (...args) {
       console.log(`${value}, my name is ${this.name}`)
-      fn.apply(this, arguments)
+      fn.apply(this, args)
     }
   }
 }

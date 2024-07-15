@@ -1,24 +1,52 @@
 # var、let、const
 ## 一、 var的缺点和let的对比
 1. var会污染全局代码
+<!-- eslint-skip -->
+```js
+var foo = 1
+console.log(window.foo)
+// output: 1
+```
 
-<<< @/notes/100_js/100_var、let、const/100_污染全局代码.js#snippet1
-
-<<< @/notes/100_js/100_var、let、const/100_污染全局代码.js#snippet2
+<!-- eslint-skip -->
+```js
+let foo = 1
+console.log(window.foo)
+// output: undefined
+```
 
 2. var会变量提升
-
-<<< @/notes/100_js/100_var、let、const/200_变量提升.js#snippet1
-
-<<< @/notes/100_js/100_var、let、const/200_变量提升.js#snippet2
+<!-- eslint-skip -->
+```js
+console.log(foo)
+// output: undefined
+var foo = 1
+```
+<!-- eslint-skip -->
+```js
+console.log(foo)
+// error: ReferenceError: Cannot access 'foo' before initialization
+let foo = 1
+```
 
 3. 可被重复声明
+<!-- eslint-skip -->
+```js
+var foo = 1
+var foo = 2
+console.log(foo)
+// output: 2
+```
 
-<<< @/notes/100_js/100_var、let、const/300_重复声明.js#snippet1
+<!-- eslint-skip -->
+```js
+let foo = 1
+let foo = 2
+console.log(foo)
+// error: SyntaxError: Identifier 'foo' has already been declared
+```
 
-<<< @/notes/100_js/100_var、let、const/300_重复声明.js#snippet2
-
-4. 暂存死区
+1. 暂存死区
 
 <<< @/notes/100_js/100_var、let、const/400_暂存死区.js#snippet1{3}
 

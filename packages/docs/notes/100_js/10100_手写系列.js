@@ -11,8 +11,9 @@ export function myDebounce(fn, wait) {
 export function myThrottle(fn, wait) {
   let timer
   return () => {
-    if (timer)
+    if (timer) {
       return
+    }
     timer = setTimeout(() => {
       fn()
       timer = null
@@ -25,10 +26,12 @@ export function myInstanceOf(obj, constructor) {
   // eslint-disable-next-line no-proto, no-restricted-properties
   let proto = obj.__proto__
   while (true) {
-    if (proto === null)
+    if (proto === null) {
       return false
-    if (proto === constructor.prototype)
+    }
+    if (proto === constructor.prototype) {
       return true
+    }
     // eslint-disable-next-line no-proto, no-restricted-properties
     proto = proto.__proto__
   }
@@ -59,14 +62,17 @@ export function myBind(bindThis, ...args) {
 
 /** 手写deepClone */
 export function myDeepClone(source, map = new WeakMap()) {
-  if (source === null || typeof source !== 'object')
+  if (source === null || typeof source !== 'object') {
     return source
-  if (map.has(source))
+  }
+  if (map.has(source)) {
     return map.get(source)
+  }
   const target = Array.isArray(source) ? [] : {}
   map.set(source, target)
-  for (const key in source)
+  for (const key in source) {
     target[key] = myDeepClone(source[key], map)
+  }
   return target
 }
 
@@ -84,10 +90,11 @@ export function ajax(method, url, data) {
     xhr.open(method, url)
     xhr.onreadystatechange(() => {
       if (xhr.readyState === 4) {
-        if (xhr.status === 200 || xhr.status === 304)
+        if (xhr.status === 200 || xhr.status === 304) {
           resolve(xhr.responseText)
-        else
+        } else {
           reject(new Error('fetch fail'))
+        }
       }
     })
     xhr.send(data)
@@ -97,38 +104,11 @@ export function ajax(method, url, data) {
 /** 函数科里化 */
 export function myCurry(fn) {
   return function curried(...args) {
-    if (args.length >= fn.length)
+    if (args.length >= fn.length) {
       return fn.apply(this, args)
+    }
     return function (...subArgs) {
       return curried.apply(this, [...args, ...subArgs])
     }
-  }
-}
-
-export class MyPromise {
-  status = 'pending'
-  value
-  constructor(executor) {
-    executor(this.resolve, this.reject)
-  }
-
-  resolve(val) {
-    if (this.status !== 'pending')
-      return
-
-    this.value = val
-    this.status = 'fulfilled'
-  }
-
-  reject(val) {
-    if (this.status !== 'pending')
-      return
-
-    this.value = val
-    this.status = 'rejected'
-  }
-
-  then(onFulfilled, onRejected) {
-
   }
 }

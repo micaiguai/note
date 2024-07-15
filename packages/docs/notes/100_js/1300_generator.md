@@ -33,14 +33,14 @@ console.log('iterator.next() :', iterator.next('d'))
 function co(generator) {
   const iterator = generator()
   return new Promise((resolve, reject) => {
-    const next = preValue => {
+    const next = (preValue) => {
       const { value, done } = iterator.next(preValue)
       if (done) {
         resolve(value)
         return
       }
       Promise.resolve(value).then(
-        promiseValue => {
+        (promiseValue) => {
           next(promiseValue)
         },
         reject
@@ -57,7 +57,7 @@ function * generator() {
   return result3
 }
 
-co(generator).then(value => {
+co(generator).then((value) => {
   // output: value : 3
   console.log('value :', value)
 })
@@ -71,11 +71,12 @@ async function works() {
     const result3 = await Promise.resolve(result2 + 1)
     return result3
   } catch (error) {
+    console.log('error :', error)
     throw error
   }
 }
 
-works().then(value => {
+works().then((value) => {
   console.log('value :', value)
 })
 ```

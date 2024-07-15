@@ -58,8 +58,9 @@ function generatePlugins() {
       pluginServe()
     ]
   }
-  if (process.env.NODE_ENV === NODE_ENV_ENUM.PRODUCTION)
+  if (process.env.NODE_ENV === NODE_ENV_ENUM.PRODUCTION) {
     plugins = []
+  }
 
   return plugins
 }

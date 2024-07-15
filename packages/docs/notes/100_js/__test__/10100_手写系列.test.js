@@ -21,7 +21,6 @@ describe('手写', () => {
   it('throttle', () => {
     let count = 0
     function add() {
-      console.log('add')
       count++
     }
     const addThrottle = myThrottle(add, 100)
@@ -43,39 +42,39 @@ describe('手写', () => {
   })
   /** TODO: Function.prototype.myCall会不会影响其他测试用例 */
   it('call', () => {
-    Function.prototype.myCall = myCall
     function getThis(...args) {
       return {
         this: this,
         args,
       }
     }
+    getThis.prototype = Object.create({ myCall })
     const cat = {}
     const args = [1, 2, 3]
     expect(getThis.myCall(cat, ...args).this).toBe(cat)
     expect(getThis.myCall(cat, ...args).args).toEqual(args)
   })
   it('apply', () => {
-    Function.prototype.myApply = myApply
     function getThis(...args) {
       return {
         this: this,
         args,
       }
     }
+    getThis.prototype = Object.create({ myApply })
     const cat = {}
     const args = [1, 2, 3]
     expect(getThis.myApply(cat, args).this).toBe(cat)
     expect(getThis.myApply(cat, args).args).toEqual(args)
   })
   it('bind', () => {
-    Function.prototype.myBind = myBind
     function getThis(...args) {
       return {
         this: this,
         args,
       }
     }
+    getThis.prototype = Object.create({ myBind })
     const cat = {}
     const args = [1, 2, 3]
     expect(getThis.myBind(cat, ...args)().this).toBe(cat)

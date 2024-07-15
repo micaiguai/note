@@ -1,3 +1,4 @@
+/* eslint-disable style/max-statements-per-line */
 const STATE_ENUM = {
   PENDING: 'pending',
   FULFILLED: 'fulfilled',
@@ -16,20 +17,20 @@ function resolvePromise(promise, x, resolve, reject) {
       if (typeof then === 'function') {
         then.call(
           x,
-          value => {
+          (value) => {
             if (calledFlag) {
               return
             }
             calledFlag = true
             resolvePromise(promise, value, resolve, reject)
           },
-          reason => {
+          (reason) => {
             if (calledFlag) {
               return
             }
             calledFlag = true
             reject(reason)
-          }
+          },
         )
       } else {
         resolve(x)
@@ -50,31 +51,31 @@ class Promise {
   state = STATE_ENUM.PENDING
   value = undefined
   reason = undefined
-  onFulfilleds = []
-  onRejecteds = []
+  onFulfilledList = []
+  onRejectList = []
   constructor(executor) {
-    const resolve = (value) => {
-      if (this.state !== STATE_ENUM.PENDING) {
-        return
-      }
-      if (value instanceof Promise) {
-        value.then(resolve, reject)
-        return 
-      }
-      this.value = value
-      this.state = STATE_ENUM.FULFILLED
-      this.onFulfilleds.forEach(onFulfilled => {
-        onFulfilled()
-      })
-    }
     const reject = (reason) => {
       if (this.state !== STATE_ENUM.PENDING) {
         return
       }
       this.reason = reason
       this.state = STATE_ENUM.REJECTED
-      this.onRejecteds.forEach(onRejected => {
+      this.onRejectList.forEach((onRejected) => {
         onRejected()
+      })
+    }
+    const resolve = (value) => {
+      if (this.state !== STATE_ENUM.PENDING) {
+        return
+      }
+      if (value instanceof Promise) {
+        value.then(resolve, reject)
+        return
+      }
+      this.value = value
+      this.state = STATE_ENUM.FULFILLED
+      this.onFulfilledList.forEach((onFulfilled) => {
+        onFulfilled()
       })
     }
     try {
@@ -83,9 +84,10 @@ class Promise {
       reject(error)
     }
   }
+
   then(onFulfilled, onRejected) {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
-    onRejected = typeof onRejected === 'function' ? onRejected : error => { throw error }
+    onRejected = typeof onRejected === 'function' ? onRejected : (error) => { throw error }
     const promise2 = new Promise((resolve, reject) => {
       if (this.state === STATE_ENUM.FULFILLED) {
         setTimeout(() => {
@@ -108,7 +110,7 @@ class Promise {
         })
       }
       if (this.state === STATE_ENUM.PENDING) {
-        this.onFulfilleds.push(() => {
+        this.onFulfilledList.push(() => {
           setTimeout(() => {
             try {
               const x = onFulfilled(this.value)
@@ -118,7 +120,7 @@ class Promise {
             }
           })
         })
-        this.onRejecteds.push(() => {
+        this.onRejectList.push(() => {
           setTimeout(() => {
             try {
               const x = onRejected(this.reason)
@@ -132,33 +134,38 @@ class Promise {
     })
     return promise2
   }
+
   catch(onRejected) {
     return this.then(undefined, onRejected)
   }
+
   finally(callback) {
     return this.then(
-      value => {
+      (value) => {
         return Promise.resolve(callback()).then(() => {
           return value
         })
       },
-      reason => {
+      (reason) => {
         return Promise.resolve(callback()).then(() => {
           throw reason
         })
-      }
+      },
     )
   }
+
   static resolve(value) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(value)
     })
   }
+
   static reject(reason) {
     return new Promise((resolve, reject) => {
       reject(reason)
     })
   }
+
   static all(items) {
     const results = []
     let times = 0
@@ -174,10 +181,10 @@ class Promise {
         const item = items[index]
         if (item instanceof Promise) {
           item.then(
-            value => {
+            (value) => {
               processValue(index, value)
-            }, 
-            reject
+            },
+            reject,
           )
         } else {
           processValue(index, item)
@@ -185,16 +192,17 @@ class Promise {
       }
     })
   }
+
   static race(items) {
     return new Promise((resolve, reject) => {
       for (let index = 0; index < items.length; index++) {
         const item = items[index]
         if (item instanceof Promise) {
           item.then(
-            value => {
+            (value) => {
               resolve(value)
-            }, 
-            reject
+            },
+            reject,
           )
         } else {
           resolve(item)
@@ -205,13 +213,13 @@ class Promise {
 }
 
 Promise.defer = Promise.deferred = function () {
-  let dfd = {};
-  dfd.promise = new Promise((resolve,reject)=>{
-      dfd.resolve = resolve;
-      dfd.reject = reject;
+  const dfd = {}
+  dfd.promise = new Promise((resolve, reject) => {
+    dfd.resolve = resolve
+    dfd.reject = reject
   })
   return dfd
 }
-module.exports = Promise;
+module.exports = Promise
 // pnpm i promises-aplus-test -g
 // npx promises-aplus-test /Users/m/zhangshiyu/workspace/my_note/100_js/1200_promise.js

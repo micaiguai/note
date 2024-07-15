@@ -6,7 +6,7 @@
 ## 代码
 ```js
 function timeout(delay) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(delay)
     }, delay)
@@ -26,4 +26,3 @@ for await (const item of iterators) {
   console.log(item)
 }
 ```
-

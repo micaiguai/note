@@ -44,6 +44,7 @@ const result = compose(decorate, toUpperCase, sum)('love', 'frontend')
 console.log(result)
 ```
 ### 手写reduce
+<!-- eslint-skip -->
 ```js
 Array.prototype.reduce = function (callback, initial) {
   for (let index = 0; index < this.length; index++) {

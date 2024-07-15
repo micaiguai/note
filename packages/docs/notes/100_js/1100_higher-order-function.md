@@ -4,11 +4,12 @@
 2. 函数的返回值是参数
 
 ## 实现before
+<!-- eslint-disable no-extend-native -->
 ```js
 function say(name) {
   console.log(`hi, ${name}`)
 }
-Function.prototype.before = function(callback) {
+Function.prototype.before = function (callback) {
   return (...args) => {
     callback()
     this(...args)
@@ -50,8 +51,9 @@ console.log(isString('tom'))
 console.log(isString([]))
 ```
 ## 实现after
+<!-- eslint-disable node/handle-callback-err -->
 ```js
-import fs from 'fs'
+import fs from 'node:fs'
 
 const person = {}
 // 什么是闭包，定义函数的作用域和执行函数的作用域不是同一个作用域

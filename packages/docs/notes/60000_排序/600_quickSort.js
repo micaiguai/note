@@ -18,6 +18,6 @@ export function quickSort1(nums) {
   return [
     ...quickSort1(leftNums),
     nums[pivotIndex],
-    ...quickSort1(rightNums)
+    ...quickSort1(rightNums),
   ]
 }

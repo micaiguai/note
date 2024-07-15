@@ -1,5 +1,6 @@
 # class
 ## 原型
+<!-- eslint-skip -->
 ```js
 function Animal(name) {
   this.name = name
@@ -31,6 +32,7 @@ console.log(Animal.__proto__ === Function.prototype)
 ![image](../../assets/100_800_2023-12-10_原型图.png)
 
 ## 继承
+<!-- eslint-skip -->
 ```js
 function Animal(name) {
   this.name = name

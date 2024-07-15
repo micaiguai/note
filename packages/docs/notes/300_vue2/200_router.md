@@ -12,7 +12,7 @@
 
 ### hash原理
 ```js
-window.addEventListener('hashchange', e => {
+window.addEventListener('hashchange', (e) => {
   // 当手动改变地址栏地址时
   // http://127.0.0.1:5500/playground/#old -> http://127.0.0.1:5500/playground/#new
   // output: http://127.0.0.1:5500/playground/#old

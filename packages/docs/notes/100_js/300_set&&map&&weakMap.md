@@ -27,7 +27,7 @@ console.log(set)
  * @param {Array} arr2
  */
 function union(arr1, arr2) {
-  return Array.from(new Set([...arr1, ...arr2]));
+  return Array.from(new Set([...arr1, ...arr2]))
 }
 
 /**
@@ -38,7 +38,7 @@ function union(arr1, arr2) {
 function intersection(arr1, arr2) {
   return Array.from(
     new Set(
-      arr1.filter((item) => arr2.includes(item))
+      arr1.filter(item => arr2.includes(item))
     )
   )
 }
@@ -51,7 +51,7 @@ function intersection(arr1, arr2) {
 function difference(arr1, arr2) {
   return Array.from(
     new Set(
-      arr1.filter((item) => !arr2.includes(item))
+      arr1.filter(item => !arr2.includes(item))
     )
   )
 }
@@ -69,12 +69,12 @@ console.log(difference(nums, nums2))
 1. weakMap不会阻止键对象被垃圾回收
 ```js
 const map = new Map()
-const person = {
+let person = {
   name: 'tom'
 }
 map.set(person, 'foo')
 person = null
-// Map(1) {{…} => 'foo'}
+// Map(1) {{…} => 'foo'}
 console.log(map)
 ```
 ```js

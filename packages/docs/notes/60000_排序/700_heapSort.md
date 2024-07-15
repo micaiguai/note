@@ -36,4 +36,3 @@ function heapify(nums, i) {
   }
 }
 ```
-

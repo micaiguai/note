@@ -49,6 +49,8 @@ person.name = 'tom'
 console.log(person.name)
 ```
 ## 模拟vue的对象的observer
+<!-- eslint-disable no-extend-native -->
+<!-- eslint-disable prefer-rest-params -->
 ```js
 /**
  * 观察对象
@@ -94,7 +96,7 @@ function defineProperty(obj, key, val) {
 const arrMethodKeys = ['push']
 for (const key of arrMethodKeys) {
   const oldMethod = Array.prototype[key]
-  Array.prototype[key] = function() {
+  Array.prototype[key] = function () {
     update()
     oldMethod.apply(this, arguments)
   }

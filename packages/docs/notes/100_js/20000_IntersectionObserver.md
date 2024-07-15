@@ -15,7 +15,7 @@
 const io = new IntersectionObserver(
   (entries: IntersectionObserverEntry[]) => {
     // 回调逻辑
-  }, 
+  },
   {
     // 配置
   } as IntersectionObserverInit
@@ -23,32 +23,32 @@ const io = new IntersectionObserver(
 
 interface IntersectionObserverInit {
   // 指定的祖先元素
-  root?: Element | Document | null;
+  root?: Element | Document | null
   // 根元素的margin，如果延伸出的margin接触到observe的元素，则触发回调
-  rootMargin?: string;
+  rootMargin?: string
   // 触发的阈值比，在阈值的边缘来回会触发两次
   // eg: 0，只要略微看到，则触发回调
   // eg: 0.5，大概显示50%，则触发回调
   // eg: 1，只要完全看到，则触发回调
   // eg：[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]，根据不同的阈值比，触发回调
-  threshold?: number | number[];
+  threshold?: number | number[]
 }
 
 interface IntersectionObserverEntry {
   // 父元素的DOMRectReadOnly
-  readonly boundingClientRect: DOMRectReadOnly;
+  readonly boundingClientRect: DOMRectReadOnly
   // 瞬时显示的比例
-  readonly intersectionRatio: number;
+  readonly intersectionRatio: number
   // 相交区域的的DOMRectReadOnly
-  readonly intersectionRect: DOMRectReadOnly;
+  readonly intersectionRect: DOMRectReadOnly
   // 是否相交，可理解成是否显示在根元素中
-  readonly isIntersecting: boolean;
+  readonly isIntersecting: boolean
   // 根元素的DOMRectReadOnly
-  readonly rootBounds: DOMRectReadOnly | null;
+  readonly rootBounds: DOMRectReadOnly | null
   // 目标元素
-  readonly target: Element;
+  readonly target: Element
   // 从new IntersectionObserver()开始，到目标元素被观察到的所花费的时间，单位为ms
-  readonly time: DOMHighResTimeStamp;
+  readonly time: DOMHighResTimeStamp
 }
 ```
 

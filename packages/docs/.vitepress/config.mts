@@ -1,3 +1,8 @@
+/* eslint-disable regexp/no-useless-escape */
+/* eslint-disable regexp/no-misleading-capturing-group */
+/* eslint-disable regexp/optimal-quantifier-concatenation */
+
+/* eslint-disable regexp/no-unused-capturing-group */
 import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { cwd, env } from 'node:process'
@@ -10,7 +15,7 @@ const config = {
   description: 'MCG的学习和理解笔记',
 }
 
-const folderOrFileRegExp = /(?:\.\/)?([0-9]+)_([^\.]+)(\.)?(\S+)?/
+const folderOrFileRegExp = /(?:\.\/)?(\d+)_([^\.]+)(\.)?(\S+)?/
 
 /**
  * 生成文件夹数组信息
@@ -52,8 +57,9 @@ async function generateFiles(folderName: string) {
     // 提取文件信息
     .map((fileName) => {
       const matchResult = fileName.match(folderOrFileRegExp)
-      if (matchResult === null)
+      if (matchResult === null) {
         return undefined
+      }
       // eslint-disable-next-line unused-imports/no-unused-vars
       const [entireStr, sortNum, text, dot, extension] = matchResult
       const isFile = !!extension
@@ -68,10 +74,12 @@ async function generateFiles(folderName: string) {
     })
     // 过滤空 或 拓展不是markdown的文件
     .filter((item) => {
-      if (item === undefined)
+      if (item === undefined) {
         return false
-      if (item.meta.extension === undefined)
+      }
+      if (item.meta.extension === undefined) {
         return true
+      }
       return item.meta.extension === 'md'
     })
     // 排序
@@ -90,7 +98,7 @@ async function generateFiles(folderName: string) {
 
 const originFolders = (await readdir(resolve(cwd(), 'notes')))
   .filter((folderName) => {
-    const valid = /(^[0-9]*)_\??.*/.test(folderName)
+    const valid = /(^\d*)_\??.*/.test(folderName)
     return valid
   })
 const folders = await generateFolders(originFolders)

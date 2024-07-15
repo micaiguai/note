@@ -8,6 +8,7 @@ class Animal {
   static say() {
     console.log('say')
   }
+
   constructor(name) {
     // 实例属性
     this.name = name
@@ -21,6 +22,7 @@ class Animal {
     //   name: 'joker'
     // }
   }
+
   // 实例属性
   hobbies = ['eat']
   // 公共方法
@@ -31,11 +33,7 @@ class Animal {
 // 公共属性
 Animal.prototype.newHobbies = ['play']
 
-class Cat extends Animal {
-  constructor(name) {
-    super(name)
-  }
-}
+class Cat extends Animal {}
 const cat = new Cat('orange')
 const cat2 = new Cat('snow')
 // output: animal
@@ -54,6 +52,7 @@ console.log(cat.newHobbies === cat2.newHobbies)
 cat.speak()
 ```
 ## 通过babel转换为es5
+<!-- eslint-skip -->
 ```js
 function _typeof(o) {
   "@babel/helpers - typeof";

@@ -1,6 +1,6 @@
 # 私有字段
 ### 1. 属性开头加下划线
-```javascript
+```js
 class Foo {
   _bar = 1
 }
@@ -9,7 +9,7 @@ const foo = new Foo()
 console.log(foo._bar)
 ```
 ### 2. Symbol
-```javascript
+```js
 const bar = Symbol('bar')
 class Foo {
   [bar] = 1
@@ -19,7 +19,8 @@ const foo = new Foo()
 console.log(foo[bar])
 ```
 ### 3. #符号
-```javascript
+<!-- eslint-skip -->
+```js
 class Foo {
   #bar = 1
 }
