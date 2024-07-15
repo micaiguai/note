@@ -8,6 +8,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "dev": "cd packages/docs && npx vitepress dev",
     "test": "vitest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
