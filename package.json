@@ -5,6 +5,7 @@
   "description": "",
   "author": "",
   "license": "ISC",
+  "repository": "https://github.com/micaiguai/note.git",
   "keywords": [],
   "main": "index.js",
   "scripts": {
