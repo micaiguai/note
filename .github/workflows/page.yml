@@ -7,13 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: GitHub Action for WeChat Work
-        uses: chf007/action-wechat-work@1.0.8
-        env:
-          WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
-        with:
-          msgtype: text
-          content: notes start
       - uses: actions/checkout@v2
       - name: Setup timezone
         uses: zcong1993/setup-timezone@master
@@ -31,10 +24,6 @@ jobs:
         run: |
           cd docs
           pnpm run build
-      # - name: artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: dist
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -43,11 +32,3 @@ jobs:
           destination_dir: notes
           publish_branch: main
           external_repository: micaiguai/micaiguai.github.io
-      - name: GitHub Action for WeChat Work
-        if: always()
-        uses: chf007/action-wechat-work@1.0.8
-        env:
-          WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
-        with:
-          msgtype: text
-          content: 'notes ${{job.status}}'

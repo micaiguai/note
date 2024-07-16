@@ -55,5 +55,7 @@ features:
   link: /notes/130000_小程序/100_生命周期/index.md
 - title: typescript-challenge
   link: /notes/140000_typescript-challenge/100_13_hello-world.md
+- title: npm
+  link: /notes/150000_npm/100_scripts.md
 
 ---
