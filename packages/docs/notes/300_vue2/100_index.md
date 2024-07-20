@@ -20,3 +20,4 @@
   - v-model：双向数据绑定
 ### Vue vs JQuery
   - 操作DOM：Vue可以不用关注，JQuery需要频繁操作
+```

@@ -1,12 +1,13 @@
 /* eslint-disable regexp/no-useless-escape */
 /* eslint-disable regexp/no-misleading-capturing-group */
 /* eslint-disable regexp/optimal-quantifier-concatenation */
-
 /* eslint-disable regexp/no-unused-capturing-group */
+
 import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { cwd, env } from 'node:process'
 import { defineConfig } from 'vitepress'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { genIndexMd } from './utils/genIndexMd'
 import type { File, Folder } from './types'
 
@@ -143,6 +144,11 @@ export default defineConfig({
     sidebar,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/micaiguai' },
+    ],
+  },
+  markdown: {
+    codeTransformers: [
+      transformerTwoslash(),
     ],
   },
 })

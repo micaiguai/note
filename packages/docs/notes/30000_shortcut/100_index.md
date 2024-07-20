@@ -5,3 +5,5 @@
 ## macos
 - `⌘ + F3`: 展示桌面
 - `⌃ + ⌘ + Q`: 锁屏
+- `fn + ⌃ + F3`: dock show/hide
+- `⌘ + ⌃ + space`: symbol panel
