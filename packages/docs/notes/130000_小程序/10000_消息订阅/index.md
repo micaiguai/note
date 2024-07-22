@@ -17,4 +17,4 @@
 4. [发送订阅消息](https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/mp-message-management/subscribe-message/sendMessage.html)
 
 ## 效果
-![接收消息](image.png)
+<img src="./image.png" style="max-width: 375px;" />
