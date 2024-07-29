@@ -57,5 +57,9 @@ features:
   link: /notes/140000_typescript-challenge/100_13_hello-world.md
 - title: npm
   link: /notes/150000_npm/100_scripts.md
+- title: docker
+  link: /notes/160000_docker/100_index.md
+- title: mysql
+  link: /notes/170000_mysql/100_index.md
 
 ---
