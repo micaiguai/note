@@ -1,9 +1,12 @@
+# shortcut
+
 ## vscode
-- `⌥ + ⇧ + (↑ / ↓)`: 复制框选内容
-- `⌘ + ⌥ + ([ / ])`: 折叠 / 展开
+- `option` + `shift` + `↑` / `↓`: 复制框选内容
+- `command` + `option` + `[` / `]`: 折叠 / 展开
+- `option` + `z`: 切换换行
 
 ## macos
-- `⌘ + F3`: 展示桌面
-- `⌃ + ⌘ + Q`: 锁屏
-- `fn + ⌃ + F3`: dock show/hide
-- `⌘ + ⌃ + space`: symbol panel
+- `command` + `F3`: 展示桌面
+- `ctrl` + `command` + `Q`: 锁屏
+- `fn` + `ctrl` + `F3`: dock show/hide
+- `command` + `ctrl` + `space`: symbol panel

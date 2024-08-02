@@ -61,5 +61,11 @@ features:
   link: /notes/160000_docker/100_index.md
 - title: mysql
   link: /notes/170000_mysql/100_index.md
+- title: git
+  link: /notes/180000_git/100_index.md
+- title: 其他
+  link: /notes/190000_其他/10000_疑难问题.md
+- title: ruoyi
+  link: /notes/200000_ruoyi/100_index.md
 
 ---
