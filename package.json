@@ -5,24 +5,25 @@
   "description": "",
   "author": "",
   "license": "ISC",
+  "repository": "https://github.com/micaiguai/note.git",
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "dev": "cd packages/docs && pnpm run dev",
     "test": "vitest",
-    "html:dev": "serve playground",
-    "docs:dev": "cross-env BASE=/notes/ vitepress dev",
-    "docs:build": "cross-env BASE=/notes/ vitepress build",
-    "docs:preview": "vitepress preview",
-    "docs:deploy": "chmod +x scripts/uploadNote.js && scripts/uploadNote.js"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:inspector": "pnpm run @eslint/config-inspector"
   },
   "dependencies": {
+    "@eslint/config-inspector": "^0.5.1",
     "co": "^4.6.0",
     "lodash": "^4.17.21",
     "typescript": "^5.4.5",
     "zx": "^7.2.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.16.0",
+    "@antfu/eslint-config": "^2.22.3",
     "@babel/cli": "^7.23.4",
     "@babel/plugin-proposal-decorators": "^7.23.6",
     "@babel/preset-env": "^7.23.6",
@@ -31,12 +32,20 @@
     "@types/webpack": "^5.28.5",
     "chokidar": "^3.6.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.1.1",
+    "eslint": "^9.7.0",
     "json-diff": "^1.0.6",
+    "lint-staged": "^15.2.7",
     "nodemon": "^3.1.0",
     "promises-aplus-tests": "^2.1.2",
     "serve": "^14.2.2",
+    "simple-git-hooks": "^2.11.1",
     "tsup": "^8.0.2",
     "vitest": "^1.5.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

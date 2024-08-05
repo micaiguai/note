@@ -1,1 +1,0 @@
-- `source .zshrc.sh`: 更改环境变量，相当于执行.zshrc.sh
