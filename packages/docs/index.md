@@ -64,8 +64,10 @@ features:
 - title: git
   link: /notes/180000_git/100_index.md
 - title: 其他
-  link: /notes/190000_其他/10000_疑难问题.md
+  link: /notes/190000_其他/100_vmware安装.md
 - title: ruoyi
-  link: /notes/200000_ruoyi/100_index.md
+  link: /notes/200000_ruoyi/100_frontend.md
+- title: powershell
+  link: /notes/210000_powershell/100_index.md
 
 ---
