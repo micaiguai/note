@@ -69,5 +69,7 @@ features:
   link: /notes/200000_ruoyi/100_frontend.md
 - title: powershell
   link: /notes/210000_powershell/100_index.md
+- title: java
+  link: /notes/220000_java/100_index.md
 
 ---
