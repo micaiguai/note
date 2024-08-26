@@ -987,8 +987,9 @@ class IllegalNumRuntimeError extends RuntimeException {
 ```
 :::
 
-TODO:
-
+### 编译时异常
+:::code-group
+```java [Main.java]
 public class Main {
     public static void main(String[] args) throws IllegalNumRuntimeError {
         try {
@@ -1003,9 +1004,12 @@ public class Main {
         }
     }
 }
-
+```
+```java [IllegalNumRuntimeError.java]
 class IllegalNumRuntimeError extends Exception {
     public IllegalNumRuntimeError(String message) {
         super(message);
     }
 }
+```
+:::
