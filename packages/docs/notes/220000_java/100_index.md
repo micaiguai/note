@@ -1013,3 +1013,70 @@ class IllegalNumRuntimeError extends Exception {
 }
 ```
 :::
+
+## 集合
+集合分为`Collection`和`Map`
+- `Collection`每个元素是一个值
+- `Map`每个元素是键值对
+
+## Stream
+描述: 用于操作集合或数组
+
+```java
+ArrayList<String> nameList = new ArrayList<>();
+nameList.add("哈吉咪");
+nameList.add("曼布");
+nameList.add("曼波");
+nameList.add("哈吉喵");
+List<String> haNameList = nameList
+        .stream()
+        .filter(name -> name.contains("哈"))
+        .collect(Collectors.toList());
+// output: [哈吉咪, 哈吉喵]
+System.out.println(haNameList);
+```
+
+## IO
+```java
+// 读取文件或文件夹
+File file = new File("C:\\index.html");
+// output: 132
+System.out.println(file.length());
+```
+
+## 字符、字节、位
+描述：字符根据编码规则有多个字节，一个字节有8位，一位用0或1表示
+
+## 编码解码
+```java
+// encode
+byte[] bytes = "hello".getBytes();
+// [104, 101, 108, 108, 111]
+System.out.println(Arrays.toString(bytes));
+// decode
+String string = new String(bytes);
+// output: hello
+System.out.println(string);
+```
+
+## 字节流和字符流
+描述: 字节流适用于读写字节，字符流适用于读写字符
+
+### 字节流
+```java
+// 使用try-resource回收实现Closeable接口的类。调用close()方法
+try (
+    InputStream is = new FileInputStream("C:\\Users\\m\\zhangshiyu\\workspace\\learn_java8\\hajimi\\src\\main\\java\\com\\mcg\\index.html");
+    OutputStream os = new FileOutputStream("C:\\Users\\m\\zhangshiyu\\workspace\\learn_java8\\hajimi\\src\\main\\java\\com\\mcg\\index2.html");
+) {
+    int kb = 2 ^ 10;
+    byte[] buffer = new byte[kb];
+    int len;
+    while ((len = is.read(buffer)) != -1) {
+        os.write(buffer, 0, len);
+    }
+}
+```
+
+### buffer
+描述: `BufferFileInputStream`包装`FileInputStream`，会在内存中开辟一个8kb的内存空间来充当程序和文件的媒介，提高读写效率
