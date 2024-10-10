@@ -1037,6 +1037,7 @@ System.out.println(haNameList);
 ```
 
 ## IO
+![alt text](image-3.png)
 ```java
 // 读取文件或文件夹
 File file = new File("C:\\index.html");
@@ -1061,6 +1062,8 @@ System.out.println(string);
 
 ## 字节流和字符流
 描述: 字节流适用于读写字节，字符流适用于读写字符
+> - 字节流`FileInputStream`、`FileOutputStream`
+> - 字符流`FileReader`、`FileWriter`
 
 ### 字节流
 ```java
@@ -1079,4 +1082,1056 @@ try (
 ```
 
 ### buffer
-描述: `BufferFileInputStream`包装`FileInputStream`，会在内存中开辟一个8kb的内存空间来充当程序和文件的媒介，提高读写效率
+描述: `BufferFileInputStream`包装`FileInputStream`，会在内存中开辟一个`8kb`的内存空间来充当程序和文件的媒介，提高读写效率
+
+> - 如果手动用`byte[]`实现`buffer`的逻辑，则时间接近。
+> - 如果缓存的大小越大速度越快，但是带来的速度提升越来越小。
+
+```java
+public class Main {
+    final static String sourceFile = "C:\\Users\\m\\zhangshiyu\\temp\\PotPlayerSetup64.exe";
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp";
+    public static void main(String[] args) {
+        // output: 单字节拷贝共耗时82415毫秒
+        copy01();
+        // output: 字节数组共耗时120毫秒
+        copy02();
+        // output: buffer单字节拷贝共耗时766毫秒
+        copy03();
+        // output: buffer字节数组共耗时33毫秒
+        copy04();
+    }
+    private static void copy01() {
+        try (
+            FileInputStream is = new FileInputStream(sourceFile);
+            FileOutputStream os = new FileOutputStream(destPath + "\\" + "01.exe");
+        ) {
+            long startMillis = System.currentTimeMillis();
+            int b;
+            while ((b = is.read()) != -1) {
+                os.write(b);
+            }
+            long costMillis =  System.currentTimeMillis() - startMillis;
+            System.out.println("单字节拷贝共耗时" + costMillis + "毫秒");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+    private static void copy02() {
+        try (
+            FileInputStream is = new FileInputStream(sourceFile);
+            FileOutputStream os = new FileOutputStream(destPath + "\\" + "01.exe");
+        ) {
+            long startMillis = System.currentTimeMillis();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = is.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            long costMillis =  System.currentTimeMillis() - startMillis;
+            System.out.println("字节数组共耗时" + costMillis + "毫秒");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+    private static void copy03() {
+        try (
+            FileInputStream is = new FileInputStream(sourceFile);
+            FileOutputStream os = new FileOutputStream(destPath + "\\" + "01.exe");
+            BufferedInputStream bis = new BufferedInputStream(is);
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+        ) {
+            long startMillis = System.currentTimeMillis();
+            int b;
+            while ((b = bis.read()) != -1) {
+                bos.write(b);
+            }
+            long costMillis =  System.currentTimeMillis() - startMillis;
+            System.out.println("buffer单字节拷贝共耗时" + costMillis + "毫秒");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+    private static void copy04() {
+        try (
+            FileInputStream is = new FileInputStream(sourceFile);
+            FileOutputStream os = new FileOutputStream(destPath + "\\" + "01.exe");
+            BufferedInputStream bis = new BufferedInputStream(is);
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+        ) {
+            long startMillis = System.currentTimeMillis();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, len);
+            }
+            long costMillis =  System.currentTimeMillis() - startMillis;
+            System.out.println("buffer字节数组共耗时" + costMillis + "毫秒");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+
+### 编码问题
+描述：如果代码文件的编码格式和读取文件的编码格式不一致会导致乱码。通过`InputStreamReader`指定编码格式解决此问题。
+
+```java
+public class Main {
+    final static String sourceFile = "C:\\Users\\m\\zhangshiyu\\temp\\verse.txt";
+    public static void main(String[] args) {
+        read();
+    }
+
+    private static void read() {
+        try (
+            FileInputStream is = new FileInputStream(sourceFile);
+            InputStreamReader isr = new InputStreamReader(is, "GBK");
+            BufferedReader br = new BufferedReader(isr)
+        ) {
+            String lineVal = br.readLine();
+            // output: 床前明月光
+            System.out.println(lineVal);
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+
+### 打印流
+描述：使用简单高效（`PrintWriter`、`PrintStream`）。
+```java
+public class Main {
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp";
+    public static void main(String[] args) {
+        printWrite();
+    }
+
+    private static void printWrite() {
+        try (
+            PrintWriter pw = new PrintWriter(destPath + "\\" + "verse.txt");
+        ) {
+            pw.println("床前明月光");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+
+### 输出重定向
+描述：把输出值重定向到打印流中
+```java
+public class Main {
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp";
+    public static void main(String[] args) {
+        printWrite();
+    }
+
+    private static void printWrite() {
+        try (
+            PrintStream ps = new PrintStream(destPath + "\\" + "verse.txt");
+        ) {
+            System.setOut(ps);
+            System.out.println("床前明月光");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+
+### 数据流
+描述：允许读写数据的类型和值（`DataOutputStream`、`DataInputStream`）
+```java
+public class Main {
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp\\temp.txt";
+    public static void main(String[] args) {
+        write();
+        read();
+    }
+    private static void write() {
+        try (
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream(destPath));
+        ) {
+            dos.writeInt(1);
+            dos.writeDouble(1.1);
+            dos.writeUTF("床前明月光");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+    private static void read() {
+        try (
+            DataInputStream dis = new DataInputStream(new FileInputStream(destPath));
+        ) {
+            // 1
+            System.out.println(dis.readInt());
+            // 1.1
+            System.out.println(dis.readDouble());
+            // 床前明月光
+            System.out.println(dis.readUTF());
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+
+### 对象流
+描述：将对象序列化的流
+
+> - 对象需要实现`Serializable`
+> - 不想被序列化的字段可以用`transient`修饰
+
+:::code-group
+```java [Main.java]
+public class Main {
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp\\temp.txt";
+    public static void main(String[] args) {
+        write();
+        read();
+    }
+    private static void write() {
+        try (
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destPath));
+        ) {
+            User user = new User();
+            user.setName("tom");
+            user.setPassword("123456");
+            oos.writeObject(user);
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+    private static void read() {
+        try (
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(destPath));
+        ) {
+            User user = (User) ois.readObject();
+            // output: tom
+            System.out.println(user.getName());
+            // output: null
+            System.out.println(user.getPassword());
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+    }
+}
+```
+```java [User.java]
+public class User implements Serializable {
+    /**
+     * 名称
+     */
+    private String name;
+    /**
+     * 密码
+     */
+    private transient String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+:::
+
+## property文件流
+:::code-group
+```java [Main.java]
+public class Main {
+    final static String destPath = "C:\\Users\\m\\zhangshiyu\\temp\\index.properties";
+    public static void main(String[] args) {
+        write(read());
+    }
+    private static void write(Properties p) {
+        try (
+            OutputStream os = new FileOutputStream(destPath);
+        ) {
+            p.setProperty("sex", "0");
+            // [index.properties]
+            // #
+            // #Wed Sep 18 15:48:09 CST 2024
+            // age=12
+            // name=tom
+            // sex=0
+            p.store(os, "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Properties read() {
+        Properties p = new Properties();
+        try (
+            InputStream is = new FileInputStream(destPath);
+        ) {
+            p.load(is);
+            // output: {age=12, name=tom}
+            System.out.println(p);
+            return p;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return p;
+        }
+    }
+}
+```
+```properties [index.properties]
+name=tom
+age=12
+```
+:::
+
+## Thread
+描述：开启一个线程
+
+### extends Thread
+描述：可以实现线程，但是无法`extends`自己的的类
+:::code-group
+```java [MyThread.java]
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("子线程" + i);
+        }
+    }
+}
+
+```
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        MyThread myThread = new MyThread();
+        myThread.start();
+        for (int i = 0; i < 5; i++) {
+            System.out.println("主线程" + i);
+        }
+    }
+}
+
+```
+```sh
+主线程0
+子线程0
+子线程1
+子线程2
+子线程3
+子线程4
+主线程1
+主线程2
+主线程3
+主线程4
+```
+:::
+
+### implements Runnable
+描述：可以实现线程，可以`extends`自己的类
+:::code-group
+```java [MyThread.java]
+public class MyThread implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("子线程" + i);
+        }
+    }
+}
+```
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        MyThread myThread = new MyThread();
+        new Thread(myThread).start();
+        for (int i = 0; i < 5; i++) {
+            System.out.println("主线程" + i);
+        }
+    }
+}
+```
+```sh
+主线程0
+主线程1
+子线程0
+子线程1
+子线程2
+主线程2
+子线程3
+子线程4
+主线程3
+主线程4
+```
+:::
+
+### implements Runnable Lambda
+描述：可以实现线程，可以`extends`自己的类，可以获取线程执行结果
+```java
+public class Main {
+    public static void main(String[] args) {
+        new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("子线程" + i);
+            }
+        }).start();
+        for (int i = 0; i < 5; i++) {
+            System.out.println("主线程" + i);
+        }
+    }
+}
+```
+### Callable & FutureTask
+:::code-group
+```java [MyCallable.java]
+public class MyCallable<S> implements Callable<String> {
+    int n;
+
+    public MyCallable(int n) {
+        this.n = n;
+    }
+
+    @Override
+    public String call() throws Exception {
+        int total = 0;
+        for (int i = 0; i < this.n; i++) {
+            total += i;
+        }
+        return "1-" + n + "的和为：" + total;
+    }
+}
+```
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        MyCallable<String> myCallable = new MyCallable<>(10);
+        FutureTask<String> stringFutureTask = new FutureTask<>(myCallable);
+        Thread thread = new Thread(stringFutureTask);
+        thread.start();
+
+        MyCallable<String> myCallable2 = new MyCallable<>(100);
+        FutureTask<String> stringFutureTask2 = new FutureTask<>(myCallable2);
+        Thread thread2 = new Thread(stringFutureTask2);
+        thread2.start();
+
+        // 调用get时，主线程会阻塞，直到线程执行完毕
+        String result = stringFutureTask.get();
+        // 1-10的和为：45
+        System.out.println(result);
+        String result2 = stringFutureTask2.get();
+        // 1-100的和为：4950
+        System.out.println(result2);
+    }
+}
+```
+:::
+
+### Thread api
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        MyThread myThread = new MyThread();
+        myThread.setName("thread-1");
+        // output: thread-1 is running
+        myThread.start();
+        myThread.join();
+        MyThread myThread2 = new MyThread();
+        myThread2.setName("thread-2");
+        // output: thread-2 is running
+        myThread2.start();
+        myThread.join();
+        Thread thread = Thread.currentThread();
+        // output: main is running
+        System.out.println(thread.getName() + " is running");
+    }
+}
+```
+```java [MyThread.java]
+class MyThread extends Thread {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Thread thread = Thread.currentThread();
+        System.out.println(thread.getName() + " is running");
+    }
+}
+```
+:::
+
+## 线程安全
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        Account account = new Account(10000);
+        new DrawThread(account, "tom").start();
+        new DrawThread(account, "jerry").start();
+    }
+}
+```
+```java [Account.java]
+public class Account {
+    private int money;
+
+    public Account(int money) {
+        this.money = money;
+    }
+
+    public void draw(int money) {
+        String name = Thread.currentThread().getName();
+        if (this.money >= money) {
+            System.out.println(name + " withdraws " + money + " successfully");
+            this.money -= money;
+            System.out.println("The balance is " + this.money);
+        } else {
+            System.out.println(name + " withdraws " + money + " failed");
+        }
+    }
+}
+```
+```java [DrawThread.java]
+public class DrawThread extends Thread {
+    private Account account;
+
+    public DrawThread(Account account, String name) {
+        super(name);
+        this.account = account;
+    }
+
+    @Override
+    public void run() {
+        account.draw(10000);
+    }
+}
+```
+```sh [output]
+tom withdraws 10000 successfully
+The balance is 0
+jerry withdraws 10000 successfully
+The balance is -10000
+```
+:::
+## `synchronized`代码块锁
+描述：利用`synchronized`代码块，传入唯一对象作为锁，实现线程安全
+
+> - 在实例方法中传入可以传入线程共享的资源作为唯一对象，如下面案例中的`this`，指向当前账户，可以避免其余账户业务被锁的
+> - 在静态方法中传入可以传入`xxx.class`类字节码对象作为唯一对象
+
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        Account account = new Account(10000);
+        new DrawThread(account, "tom").start();
+        new DrawThread(account, "jerry").start();
+    }
+}
+```
+```java{10} [Account.java]
+public class Account {
+    private int money;
+
+    public Account(int money) {
+        this.money = money;
+    }
+
+    public void draw(int money) {
+        String name = Thread.currentThread().getName();
+        synchronized (this) {
+            if (this.money >= money) {
+                System.out.println(name + " withdraws " + money + " successfully");
+                this.money -= money;
+                System.out.println("The balance is " + this.money);
+            } else {
+                System.out.println(name + " withdraws " + money + " failed");
+            }
+        }
+    }
+}
+```
+```java [DrawThread.java]
+public class DrawThread extends Thread {
+    private Account account;
+
+    public DrawThread(Account account, String name) {
+        super(name);
+        this.account = account;
+    }
+
+    @Override
+    public void run() {
+        account.draw(10000);
+    }
+}
+```
+```sh [output]
+tom withdraws 10000 successfully
+The balance is 0
+jerry withdraws 10000 failed
+```
+:::
+## `synchronized`方法锁
+描述：通过`synchronized`方法修饰符声明方法，和`synchronized`代码块锁功能一致，会在内部生成一个锁
+
+> - 在实例方法中，锁为的`this`
+> - 在静态方法中，锁为`xxx.class`类字节码对象
+
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        Account account = new Account(10000);
+        new DrawThread(account, "tom").start();
+        new DrawThread(account, "jerry").start();
+    }
+}
+```
+```java{8} [Account.java]
+public class Account {
+    private int money;
+
+    public Account(int money) {
+        this.money = money;
+    }
+
+    public synchronized void draw(int money) {
+        String name = Thread.currentThread().getName();
+        if (this.money >= money) {
+            System.out.println(name + " withdraws " + money + " successfully");
+            this.money -= money;
+            System.out.println("The balance is " + this.money);
+        } else {
+            System.out.println(name + " withdraws " + money + " failed");
+        }
+    }
+}
+```
+```java [DrawThread.java]
+public class DrawThread extends Thread {
+    private Account account;
+
+    public DrawThread(Account account, String name) {
+        super(name);
+        this.account = account;
+    }
+
+    @Override
+    public void run() {
+        account.draw(10000);
+    }
+}
+```
+```sh [output]
+tom withdraws 10000 successfully
+The balance is 0
+jerry withdraws 10000 failed
+```
+:::
+## `Lock`锁
+描述：通过`ReentrantLock`实现
+
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        Account account = new Account(10000);
+        new DrawThread(account, "tom").start();
+        new DrawThread(account, "jerry").start();
+    }
+}
+```
+```java{3,11,23} [Account.java]
+public class Account {
+    private int money;
+    private final Lock lock = new ReentrantLock();
+
+    public Account(int money) {
+        this.money = money;
+    }
+
+    public void draw(int money) {
+        try {
+            lock.lock();
+            String name = Thread.currentThread().getName();
+            if (this.money >= money) {
+                System.out.println(name + " withdraws " + money + " successfully");
+                this.money -= money;
+                System.out.println("The balance is " + this.money);
+            } else {
+                System.out.println(name + " withdraws " + money + " failed");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+```
+```java [DrawThread.java]
+public class DrawThread extends Thread {
+    private Account account;
+
+    public DrawThread(Account account, String name) {
+        super(name);
+        this.account = account;
+    }
+
+    @Override
+    public void run() {
+        account.draw(10000);
+    }
+}
+```
+```sh [output]
+tom withdraws 10000 successfully
+The balance is 0
+jerry withdraws 10000 failed
+```
+:::
+
+## 线程通讯
+描述：线程之间互相相互协调调用，避免资源争夺
+
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        Desk desk = new Desk();
+
+        new Thread(() -> {
+            while (true) {
+                desk.put();
+            }
+        }, "chef-1").start();
+        new Thread(() -> {
+            while (true) {
+                desk.put();
+            }
+        }, "chef-2").start();
+        new Thread(() -> {
+            while (true) {
+                desk.put();
+            }
+        }, "chef-3").start();
+
+        new Thread(() -> {
+            while (true) {
+                desk.get();
+            }
+        }, "consumer-1").start();
+        new Thread(() -> {
+            while (true) {
+                desk.get();
+            }
+        }, "consumer-2").start();
+    }
+}
+```
+```java [Desk.java]
+public class Desk {
+    private ArrayList<String> foodList = new ArrayList<>();
+
+    public synchronized void put() {
+        try {
+            String name = Thread.currentThread().getName();
+            if (foodList.isEmpty()) {
+                String log = name + " make food";
+                System.out.println(log);
+                foodList.add(log);
+                Thread.sleep(2000);
+            }
+            this.notifyAll();
+            this.wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public synchronized void get() {
+        try {
+            String name = Thread.currentThread().getName();
+            if (!foodList.isEmpty()) {
+                String log = foodList.get(0) + ", then " + name + " eat food";
+                System.out.println(log);
+                foodList.clear();
+                Thread.sleep(1000);
+            }
+            this.notifyAll();
+            this.wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+```plain [output]
+chef-1 make food
+chef-1 make food, then consumer-1 eat food
+chef-3 make food
+chef-3 make food, then consumer-2 eat food
+chef-2 make food
+chef-2 make food, then consumer-1 eat food
+chef-1 make food
+chef-1 make food, then consumer-2 eat food
+```
+:::
+
+## 线程池
+:::tip
+- 计算密集型应用，推荐核心数量为`核心数 + 1`
+- `io`密集型应用，推荐核心数量为`核心数 * 2`
+:::
+
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                3,
+                5,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(4),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy()
+        );
+
+        MyRunnable myRunnable = new MyRunnable();
+        // execute
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+
+        // queue
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+
+        // open new temporary thread
+        threadPoolExecutor.execute(myRunnable);
+        threadPoolExecutor.execute(myRunnable);
+
+        // error
+        threadPoolExecutor.execute(myRunnable);
+    }
+}
+```
+```java [MyRunnable.java]
+public class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        String name = Thread.currentThread().getName();
+        System.out.println("current thread name is " + name);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+```plain [output]
+current thread name is pool-1-thread-2
+current thread name is pool-1-thread-3
+current thread name is pool-1-thread-1
+current thread name is pool-1-thread-4
+current thread name is pool-1-thread-5
+Exception in thread "main" java.util.concurrent.RejectedExecutionException: Task com.mcg.MyRunnable@14ae5a5 rejected from java.util.concurrent.ThreadPoolExecutor@7f31245a[Running, pool size = 5, active threads = 5, queued tasks = 4, completed tasks = 0]
+    at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063)
+    at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830)
+    at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1379)
+    at com.mcg.Main.main(Main.java:34)
+current thread name is pool-1-thread-3
+current thread name is pool-1-thread-1
+current thread name is pool-1-thread-4
+current thread name is pool-1-thread-2
+```
+:::
+## 线程池配合`Callable`使用
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                3,
+                5,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(4),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy()
+        );
+
+        Future<String> future1 = threadPoolExecutor.submit(new MyCallable(100));
+        Future<String> future2 = threadPoolExecutor.submit(new MyCallable(200));
+        Future<String> future3 = threadPoolExecutor.submit(new MyCallable(300));
+        Future<String> future4 = threadPoolExecutor.submit(new MyCallable(400));
+
+        System.out.println(future1.get());
+        System.out.println(future2.get());
+        System.out.println(future3.get());
+        System.out.println(future4.get());
+    }
+}
+```
+```java [MyCallable.java]
+public class MyCallable implements Callable<String> {
+    int n;
+
+    public MyCallable(int n) {
+        this.n = n;
+    }
+
+    @Override
+    public String call() throws Exception {
+        String name = Thread.currentThread().getName();
+        int total = 0;
+        for (int i = 0; i < this.n; i++) {
+            total += i;
+        }
+        return name + " --> 1-" + n + "的和为：" + total;
+    }
+}
+```
+```plain [output]
+pool-1-thread-1 --> 1-100的和为：4950
+pool-1-thread-2 --> 1-200的和为：19900
+pool-1-thread-3 --> 1-300的和为：44850
+pool-1-thread-1 --> 1-400的和为：79800
+```
+:::
+
+## Executors
+描述：创建线程池的工具类
+
+![alt text](image-4.png)
+
+:::warning
+![alt text](image-5.png)
+:::
+
+## 并发 & 并行
+描述：并发是`cpu`一瞬间执行多条线程，即快速处理完当前一些线程后又迅速处理其他线程；并行是`cpu`某一刻执行多条线程。
+
+## 线程生命周期
+![alt text](image-6.png)
+
+## 悲观锁 & 乐观锁
+描述：悲观锁就是默认的`synchronized`锁；乐观锁是指线程修改共享数据时，期望共享结果和实际读取结果不一致时，代表数据同时被另一个线程修改，当前线程则重新执行。乐观锁可以通过`AtomicInteger`等原子类实现。
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) {
+        MyRunnable myRunnable = new MyRunnable();
+        for (int i = 0; i < 100; i++) {
+            new Thread(myRunnable).start();
+        }
+    }
+}
+```
+```java [MyRunnable.java]
+public class MyRunnable implements Runnable {
+    private final AtomicInteger n = new AtomicInteger();
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println("n: " + this.n.incrementAndGet());
+        }
+    }
+}
+```
+:::
+
+## 网络
+:::code-group
+```java [Main.java]
+public class Main {
+    public static void main(String[] args) throws UnknownHostException {
+        InetAddress ip1 = InetAddress.getLocalHost();
+        System.out.println(ip1.getHostName());
+        System.out.println(ip1.getHostAddress());
+
+        InetAddress ip2 = InetAddress.getByName("www.baidu.com");
+        System.out.println(ip2.getHostName());
+        System.out.println(ip2.getHostAddress());
+    }
+}
+```
+```plain [output]
+LAPTOP-FQD1VNJF
+192.168.56.87
+www.baidu.com
+36.155.132.76
+```
+:::
+
+## UDP
+:::code-group
+```java [Server.java]
+public class Server {
+    public static void main(String[] args) throws SocketException {
+        try (
+                DatagramSocket datagramSocket = new DatagramSocket(3002)
+        ) {
+            byte[] buffer = new byte[64 * 2 ^ 10];
+            DatagramPacket datagramPacket = new DatagramPacket(
+                    buffer,
+                    buffer.length,
+                    InetAddress.getLocalHost(),
+                    3001
+            );
+            datagramSocket.receive(datagramPacket);
+            String str = new String(buffer, 0, datagramPacket.getLength());
+            // output: hello
+            System.out.println(str);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
+```
+```java [Client.java]
+public class Client {
+    public static void main(String[] args) throws SocketException {
+        try (
+                DatagramSocket datagramSocket = new DatagramSocket(3001);
+        ) {
+            byte[] buffer = "hello".getBytes();
+            DatagramPacket datagramPacket = new DatagramPacket(
+                    buffer,
+                    buffer.length,
+                    InetAddress.getLocalHost(),
+                    3002
+            );
+            datagramSocket.send(datagramPacket);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+:::

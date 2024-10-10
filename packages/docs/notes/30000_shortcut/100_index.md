@@ -10,3 +10,6 @@
 - `ctrl` + `command` + `Q`: 锁屏
 - `fn` + `ctrl` + `F3`: dock show/hide
 - `command` + `ctrl` + `space`: symbol panel
+
+## idea
+- `ctrl` + `alt` + `V`: introduce local variable
