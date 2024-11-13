@@ -71,5 +71,9 @@ features:
   link: /notes\210000_powershell\100_index.md
 - title: java
   link: /notes\220000_java\100_index.md
+- title: nginx
+  link: /notes\230000_nginx\100_index.md
+- title: 日语
+  link: /notes\240000_日语\100_index.md
 
 ---

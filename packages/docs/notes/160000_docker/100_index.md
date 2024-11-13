@@ -97,6 +97,18 @@ docker run hello-world
 docker login
 ```
 
+## 进入容器操作
+进入`nginx`容器执行`bash`
+```sh
+docker exec -it nginx /bin/bash
+```
+
+## 启用docker
+如果`docker`服务中断了，通过命令启动
+```sh
+systemctl start docker
+```
+
 ## 安装mysql
 
 ### 拉取镜像
@@ -176,4 +188,39 @@ services:
 ```
 ```sh
 docker-compose -f docker-compose.yml up -d
+```
+## 安装`nginx`
+### 创建目录
+```sh
+mkdir -p /opt/nginx/html /opt/nginx/conf.d
+```
+### 拷贝nginx配置文件
+```sh
+docker run --rm -it nginx:latest cat /etc/nginx/conf.d/default.conf > /opt/nginx/conf.d/default.conf
+docker run --rm -it nginx:latest cat /etc/nginx/nginx.conf > /opt/nginx/nginx.conf
+docker run --rm -it nginx:latest cat /usr/share/nginx/html/index.html > /opt/nginx/html/index.html
+```
+### 创建`docker-compose.yaml`
+在`/opt/nginx`下创建
+```yaml [docker-compose.yaml]
+version: '3.8'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - '8083:8083'
+    volumes:
+      - /opt/nginx/html:/etc/nginx/html
+      - /opt/nginx/conf.d:/etc/nginx/conf.d
+      - /opt/nginx/nginx.conf:/etc/nginx/nginx.conf
+```
+
+### 启动服务
+在`/opt/nginx`下执行
+```sh
+docker compose up -d
 ```
