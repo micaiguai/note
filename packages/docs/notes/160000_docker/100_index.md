@@ -3,6 +3,41 @@
 ## 参考链接
 [official-install-doc](https://docs.docker.com/engine/install/ubuntu/)
 
+## 前置步骤
+### 设置root用户密码
+```sh
+sudo passwd root
+```
+
+### 切换root用户
+```sh
+su
+```
+### 打开root用户的ssh
+```sh
+vim /etc/ssh/sshd_config
+```
+设置`PermitRootLogin`为`yes`
+```plain
+PermitRootLogin yes
+```
+```sh
+systemctl restart sshd.service
+```
+
+### 设置hostname
+修改`hostname`
+```sh
+vim /etc/hostname
+```
+修改`hostname`
+```sh
+vim /etc/hosts
+```
+```sh
+reboot
+```
+
 ## 安装
 ### 1. 删除冲突包
 ```sh
