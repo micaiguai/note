@@ -1,14 +1,25 @@
 # 基础使用
 
-## 初始化
+### Commands
+- init info
 ```sh
-# 初始化用户信息
-git config --global user.name 'micaiguai'
-git config --global user.email 'micaiguai@qq.com'
-# git存储LF换行符。设置为true时，在win时自动转换为CRLF，提交时自动转换为LF
-# TODO: 待研究
-# git config --global core.autocrlf true
-# 设置代理
+git config --global user.name ${name}
+git config --global user.email ${email}
+```
+- set crlf (only in windows)
+```sh
+git config --global core.autocrlf true
+```
+- set proxy
+```sh
 git config --global http.proxy http://127.0.0.1:7890
 git config --global https.proxy http://127.0.0.1:7890
+```
+- set remote
+```sh
+git remote set-url origin ${url}
+```
+- push new branch to remote
+```sh
+git push -u origin ${branch}
 ```
