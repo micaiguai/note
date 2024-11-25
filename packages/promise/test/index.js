@@ -1,4 +1,5 @@
 const MyPromise = require('../src/index')
+// const MyPromise = require('../src/case1')
 // const MyPromise = require('./example')
 
 module.exports = {
