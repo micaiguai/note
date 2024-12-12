@@ -52,7 +52,7 @@ features:
 - title: 面试题
   link: /notes/120000_面试题/100_数字孪生/index.md
 - title: 小程序
-  link: /notes/130000_小程序/100_生命周期/index.md
+  link: /notes/130000_小程序/100_uniapp.md
 - title: typescript-challenge
   link: /notes/140000_typescript-challenge/100_13_hello-world.md
 - title: npm
@@ -75,5 +75,13 @@ features:
   link: /notes/230000_nginx/100_index.md
 - title: zsh
   link: /notes/240000_zsh/100_index.md
+- title: os
+  link: /notes/250000_os/100_init.md
+- title: regexp
+  link: /notes/260000_regexp/100_Greedy.md
+- title: react
+  link: /notes/270000_react/100_Question.md
+- title: repository
+  link: /notes/280000_repository/100_index.md
 
 ---
