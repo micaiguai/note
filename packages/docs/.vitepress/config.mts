@@ -8,7 +8,7 @@ import { join, resolve } from 'node:path'
 import { cwd, env } from 'node:process'
 import { defineConfig } from 'vitepress'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
-import { genIndexMd } from './utils/genIndexMd'
+import { genDocMap } from './utils/genDocMap'
 import type { File, Folder } from './types'
 
 const config = {
@@ -121,7 +121,7 @@ function genNav(folder: Folder) {
   }
 }
 
-await genIndexMd(config.title, config.description, folders)
+await genDocMap(config.title, config.description, folders)
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

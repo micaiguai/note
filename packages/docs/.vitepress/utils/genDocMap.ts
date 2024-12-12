@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { cwd } from 'node:process'
 import type { Folder } from '../types'
 
-export async function genIndexMd(name: string, description: string, folders: Folder[]) {
+export async function genDocMap(name: string, description: string, folders: Folder[]) {
   const features = folders.reduce((acc, folder) => {
     return `${acc}- title: ${folder.text}
   link: ${folder.items[0].link}
@@ -30,7 +30,7 @@ ${features}
 ---
 `
   await writeFile(
-    resolve(cwd(), 'index.md'),
+    resolve(cwd(), '.docs-map.md'),
     content,
     {
       encoding: 'utf-8',
