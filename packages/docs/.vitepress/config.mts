@@ -7,7 +7,6 @@ import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { cwd, env } from 'node:process'
 import { defineConfig } from 'vitepress'
-import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { genDocMap } from './utils/genDocMap'
 import type { File, Folder } from './types'
 
@@ -144,11 +143,6 @@ export default defineConfig({
     sidebar,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/micaiguai' },
-    ],
-  },
-  markdown: {
-    codeTransformers: [
-      transformerTwoslash(),
     ],
   },
 })

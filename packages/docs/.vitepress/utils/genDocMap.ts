@@ -30,7 +30,7 @@ ${features}
 ---
 `
   await writeFile(
-    resolve(cwd(), '.docs-map.md'),
+    resolve(cwd(), '.doc-map.md'),
     content,
     {
       encoding: 'utf-8',
