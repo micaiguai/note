@@ -10,7 +10,7 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
+var reverseList = function (head) {
   let cur = head
   let prev = null
   while (cur) {
@@ -20,7 +20,7 @@ var reverseList = function(head) {
     cur = next
   }
   return prev
-};
+}
 
 /**
  * 2. 递归
@@ -34,7 +34,7 @@ var reverseList = function(head) {
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
+var reverseList = function (head) {
   if (head === null || head.next === null) {
     return head
   }
@@ -42,4 +42,4 @@ var reverseList = function(head) {
   head.next.next = head
   head.next = null
   return newHead
-};
+}

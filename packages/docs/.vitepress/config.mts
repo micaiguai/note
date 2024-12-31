@@ -7,7 +7,7 @@ import { readdir } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { cwd, env } from 'node:process'
 import { defineConfig } from 'vitepress'
-import { genDocMap } from './utils/genDocMap'
+import { genIndexMd } from './utils/genIndexMd'
 import type { File, Folder } from './types'
 
 const config = {
@@ -120,7 +120,7 @@ function genNav(folder: Folder) {
   }
 }
 
-await genDocMap(config.title, config.description, folders)
+await genIndexMd(config.title, config.description, folders)
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
