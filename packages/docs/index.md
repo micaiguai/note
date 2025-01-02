@@ -83,5 +83,7 @@ features:
   link: /notes/3300_react/100_Question.md
 - title: repository
   link: /notes/3400_repository/100_index.md
+- title: git
+  link: /notes/3500_git/100_index.md
 
 ---

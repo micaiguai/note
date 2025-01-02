@@ -23,3 +23,14 @@ git remote set-url origin ${url}
 ```sh
 git push -u origin ${branch}
 ```
+
+# 移除git hook
+
+```sh
+rm -rf .git/hooks
+```
+
+# 移除某个文件的缓存
+```sh
+git rm --cached src/config.js
+```
